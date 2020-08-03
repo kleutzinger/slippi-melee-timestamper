@@ -14,8 +14,9 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [x] listen for an input to make bookmark (button in html)
 - - [x] get the current frame of melee game
 - - [x] write bookmark (and frame data) to text file?
-- - [ ] come up with output format
+- - [x] come up with output format
 - - - timestamps.txt => 22222,path/path/game.slp
+- [x] listen for POST/GET requests on server
 - [ ] look into processing text files for Slippi Launcher (launch replay at that timestamp)
 - [ ] move button to AHK
 - - [ ] AHK bound to gamecube?? (dpad down)

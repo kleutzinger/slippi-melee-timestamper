@@ -43,31 +43,21 @@ var express = require('express'),
 app.use(express.static(path.join(process.cwd(), 'web')));
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
 app.use('/sounds', express.static(sounds_dir));
+app.get('/timestamp', (req, res) => {
+  console.log("let's make a timestamp");
+  console.log(JSON.stringify(latest_frame_data));
+  console.log(`latest frame was ${frame_count}`);
+  let outputObj = {
+    frame             : frame_count,
+    latest_frame_data : latest_frame_data,
+    state             : latest_game_state,
+    path              : latest_path
+  };
+  timestamp.writeTimestamp(outputObj, config.timestamp_output_path);
+  res.json(outputObj);
+});
 
-const getDirectories = (source) =>
-  fs
-    .readdirSync(source, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-
-const getFiles = (source) =>
-  fs
-    .readdirSync(source, { withFileTypes: true })
-    .filter((dirent) => dirent.isFile())
-    .map((dirent) => dirent.name);
-
-const setStaticDirs = (parent_dir) => {
-  const dirs = getDirectories(parent_dir);
-  dirs.map((dir) => {
-    const joined = path.join(parent_dir, dir);
-    app.use('/sounds', express.static(joined));
-    // console.log(`setting static: sounds/${dir} (${joined})`);
-  });
-  // console.log(`set ${dirs.length} stage dirs from ${parent_dir}`);
-};
-setStaticDirs(sounds_dir);
-
-const server = app.listen(port, () => {
+const server = app.listen(port, (req, res) => {
   // console.log('Listening on port: ' + port);
 });
 const io = require('socket.io')(server);
@@ -83,14 +73,6 @@ io.sockets.on('connection', function(socket) {
     };
     timestamp.writeTimestamp(outputObj, config.timestamp_output_path);
   });
-  socket.on('royalty', (msg) => {
-    const options = [ 'include', 'exclude', 'only' ];
-    if (_.includes(options, msg.val) && config.royalty_status != msg.val) {
-      console.log(`new royalty_status: ${msg.val}`);
-      config.royalty_status = msg.val;
-    }
-  });
-  socket.emit('askRoyalty');
   if (config.socketDebug) {
     console.log(Object.keys(io.sockets.sockets));
     console.log(`connection number ${connectedCount}`);
@@ -102,54 +84,13 @@ io.sockets.on('connection', function(socket) {
   }
 });
 
-function royaltyFilter(song_arr, royalty_status) {
-  if (song_arr.length === 0) return;
-  if (royalty_status === 'only') {
-    return song_arr.filter((c) => {
-      return c.includes('royalty-free');
-    });
-  } else if (royalty_status === 'exclude') {
-    return song_arr.filter((c) => {
-      return !c.includes('royalty-free');
-    });
-  } else {
-    return song_arr;
-  }
-}
-
-function infoToSong(stage_info) {
-  try {
-    stage_dir = path.join(sounds_dir, stage_info.dir_name);
-    // console.log(getFiles(stage_dir));
-    song_files = getFiles(stage_dir);
-    song_files = royaltyFilter(song_files, config.royalty_status);
-    const available_songs_count = song_files.length;
-    rand_song_file = _.shuffle(song_files)[0];
-    const output = {
-      loop                  : `sounds/${rand_song_file}`,
-      available_songs_count : available_songs_count,
-      stage_name            : stage_info.stage_name
-    };
-    console.log(output);
-    return output;
-  } catch (err) {
-    console.log(
-      `${err}\nerror getting songs for stage ${JSON.stringify(
-        stage_info
-      )}\nplease add to config.js`
-    );
-  }
-}
-
-function playSongForStage(stage_info) {
-  io.emit('startSong', infoToSong(stage_info));
-}
-
 if (config.autoOpenWebpageOnRun) {
   console.log('opening local webpage at ' + `http://localhost:${port}`);
   open(`http://localhost:${port}`);
 } else {
-  console.log(`Please open in web browser:\n   http://localhost:${port}`);
+  console.log(
+    `Please open in web browser:\n   http://localhost:${port}/timestamp`
+  );
 }
 
 // ************************   Slippi stuff below ****** ******
@@ -162,6 +103,8 @@ var timeOfLastFileChange = null;
 var gameAborted = false;
 var frame_count = 0;
 var latest_frame_data = null;
+var latest_game_state = null;
+var latest_path = null;
 
 const watcher = chokidar.watch(listenPath, {
   ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
@@ -223,7 +166,6 @@ watcher.on('change', (path) => {
     let stage_id = settings.stageId;
     console.log(stage_id_info[stage_id]);
     let stage_info = stage_id_info[stage_id];
-    playSongForStage(stage_info);
     gameState.settings = settings;
   }
 
@@ -236,6 +178,8 @@ watcher.on('change', (path) => {
     if (frameData.post) {
       frame_count = frameData.post.frame;
       latest_frame_data = frameData;
+      latest_game_state = gameState;
+      latest_path = path;
     }
     // console.log(
     //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
