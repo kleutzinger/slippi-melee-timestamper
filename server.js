@@ -10,6 +10,8 @@ const { default: SlippiGame } = require('slp-parser-js');
 const chokidar = require('chokidar');
 const _ = require('lodash');
 const { connect } = require('http2');
+const { exit } = require('process');
+const timestamp = require('./timestamp');
 
 const homedir = require('os').homedir();
 if (!config.slippi_output_dir) {
@@ -73,6 +75,13 @@ io.sockets.on('connection', function(socket) {
   let connectedCount = Object.keys(io.sockets.sockets).length;
   socket.on('timestamp_button', (msg) => {
     console.log("let's make a timestamp");
+    console.log(JSON.stringify(latest_frame_data));
+    console.log(`latest frame was ${frame_count}`);
+    let outputObj = {
+      frame             : frame_count,
+      latest_frame_data : latest_frame_data
+    };
+    timestamp.writeTimestamp(outputObj, config.timestamp_output_path);
   });
   socket.on('royalty', (msg) => {
     const options = [ 'include', 'exclude', 'only' ];
@@ -151,6 +160,8 @@ const listenPath = process.argv[2] || config['slippi_output_dir'];
 // console.log(`Looking for Slippi files at: ${listenPath}`);
 var timeOfLastFileChange = null;
 var gameAborted = false;
+var frame_count = 0;
+var latest_frame_data = null;
 
 const watcher = chokidar.watch(listenPath, {
   ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
@@ -208,6 +219,7 @@ watcher.on('change', (path) => {
     console.log(`[Game Start] New game has started`);
     // console.log(settings);
     // console.log(settings.stageId);
+    frame_count = 0;
     let stage_id = settings.stageId;
     console.log(stage_id_info[stage_id]);
     let stage_info = stage_id_info[stage_id];
@@ -221,7 +233,10 @@ watcher.on('change', (path) => {
     if (!frameData) {
       return;
     }
-
+    if (frameData.post) {
+      frame_count = frameData.post.frame;
+      latest_frame_data = frameData;
+    }
     // console.log(
     //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
     //     `${frameData.post.stocksRemaining} stocks`

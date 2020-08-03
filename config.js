@@ -3,7 +3,7 @@ const config = {
   // uncomment and edit below to set where slippi puts your .slp files
   // slippi_output_dir        : 'C:\\Users\\kevin\\Documents\\Slippi',
   // *********************************************
-
+  timestamp_output_path : './timestamps.txt',
   fileChangeTimeoutMs   : 1200, // how long to wait after a game ends to quit out
   fileChangeDeltaPollMs : 250, // how often to check when a game
   autoClose2ndWebpage   : false, // broken

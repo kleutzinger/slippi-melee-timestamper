@@ -3,6 +3,7 @@ sounds_nonfree/
 *build/
 *.zip
 *.old
+timestamps.txt
 
 # Logs
 logs
