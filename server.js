@@ -38,8 +38,8 @@ const sounds_dir = path.join(process.cwd(), 'sounds');
 
 var express = require('express'),
   app = express(),
-  port = process.env.PORT || 5669;
-
+  // port = process.env.PORT || 5669;
+  port = config.port || 7789;
 app.use(express.static(path.join(process.cwd(), 'web')));
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
 app.use('/sounds', express.static(sounds_dir));

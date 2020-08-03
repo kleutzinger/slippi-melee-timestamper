@@ -11,4 +11,9 @@ function writeTimestamp(game_info, output_path) {
   });
 }
 
+function processTxtStamps(path) {
+  // convert the text files to clippi-valid replay json files?
+  return;
+}
+// https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 module.exports = { writeTimestamp };

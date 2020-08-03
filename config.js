@@ -4,6 +4,7 @@ const config = {
   // slippi_output_dir        : 'C:\\Users\\kevin\\Documents\\Slippi',
   // *********************************************
   timestamp_output_path : './timestamps.txt',
+  port                  : 7789,
   fileChangeTimeoutMs   : 1200, // how long to wait after a game ends to quit out
   fileChangeDeltaPollMs : 250, // how often to check when a game
   autoClose2ndWebpage   : false, // broken

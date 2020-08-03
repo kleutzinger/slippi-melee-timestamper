@@ -17,7 +17,8 @@ this would allow you to go back and find cool combos or moments you've manually 
 - - [x] come up with output format
 - - - timestamps.txt => 22222,path/path/game.slp
 - [x] listen for POST/GET requests on server
-- [ ] look into processing text files for Slippi Launcher (launch replay at that timestamp)
-- [ ] move button to AHK
+- [x] look into processing text files for Slippi Launcher (launch replay at that timestamp)
+- [ ] make project clippi-valid ouptut files?
+- [x] move button to AHK
 - - [ ] AHK bound to gamecube?? (dpad down)
 
