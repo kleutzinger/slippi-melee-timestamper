@@ -2,6 +2,7 @@ sounds_nonfree/
 *mp3
 *build/
 *.zip
+*.old
 
 # Logs
 logs

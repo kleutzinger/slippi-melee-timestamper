@@ -25,9 +25,9 @@ function initSocket() {
     stopSong();
   });
 
-  socket.on('error', (data)=>{
-    $("#errors").append($("<li>").text(JSON.stringify(data)));
-  })
+  socket.on('error', (data) => {
+    $('#errors').append($('<li>').text(JSON.stringify(data)));
+  });
 
   socket.on('closePage', (data) => {
     // socket.disconnect();
@@ -46,5 +46,8 @@ function initSocket() {
   }
   $('#royalty').change(() => {
     sendRoyalty();
+  });
+  $('#timestamp_button').click((e) => {
+    socket.emit('timestamp_button');
   });
 }

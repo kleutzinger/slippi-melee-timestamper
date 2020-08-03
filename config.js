@@ -7,7 +7,7 @@ const config = {
   fileChangeTimeoutMs   : 1200, // how long to wait after a game ends to quit out
   fileChangeDeltaPollMs : 250, // how often to check when a game
   autoClose2ndWebpage   : false, // broken
-  autoOpenWebpageOnRun  : true, // auto open the webpage when the server starts
+  autoOpenWebpageOnRun  : false, // auto open the webpage when the server starts
   socketDebug           : false,
   stage_id_info         : {
     '2'  : {

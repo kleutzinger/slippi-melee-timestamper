@@ -1,3 +1,5 @@
+var a = require('./timestamp');
+console.log(a);
 var open = require('open');
 const path = require('path');
 const config = require(path.join(process.cwd(), 'config.js'));
@@ -69,6 +71,9 @@ const server = app.listen(port, () => {
 const io = require('socket.io')(server);
 io.sockets.on('connection', function(socket) {
   let connectedCount = Object.keys(io.sockets.sockets).length;
+  socket.on('timestamp_button', (msg) => {
+    console.log("let's make a timestamp");
+  });
   socket.on('royalty', (msg) => {
     const options = [ 'include', 'exclude', 'only' ];
     if (_.includes(options, msg.val) && config.royalty_status != msg.val) {
