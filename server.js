@@ -89,7 +89,7 @@ if (config.autoOpenWebpageOnRun) {
   open(`http://localhost:${port}`);
 } else {
   console.log(
-    `Please open in web browser:\n   http://localhost:${port}/timestamp`
+    `please open in web browser or send GET request to:\n   http://localhost:${port}/timestamp`
   );
 }
 

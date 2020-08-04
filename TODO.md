@@ -21,6 +21,11 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] make project clippi-valid ouptut files?
 - [x] move button to AHK
 - - [ ] AHK bound to gamecube?? (dpad down)
-- [ ] get it to start a replay (comown 🐡) 
+- [ ] get it to launch slippi replays
+- [ ] skip to that frame specified in the file
 - - https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 
+### Down the line:
+- [ ] output as youtube video
+- [ ] auto upload/rename video
+- [ ] reposition / preview different timestamp start/end
