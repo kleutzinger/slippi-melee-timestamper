@@ -21,4 +21,6 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] make project clippi-valid ouptut files?
 - [x] move button to AHK
 - - [ ] AHK bound to gamecube?? (dpad down)
+- [ ] get it to start a replay (comown 🐡) 
+- - https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 
