@@ -111,3 +111,4 @@ dist
 .tern-port
 *.exe
 1by1.ini
+temp.json
