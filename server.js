@@ -53,9 +53,9 @@ app.get('/timestamp', (req, res) => {
   // console.log(JSON.stringify(latest_frame_data));
   console.log(`(server.js) latest frame was ${frame_count}`);
   let outputObj = {
-    startFrame : frame_count,
-    endFrame   : frame_count + 60 * 5,
-    frame      : frame_count,
+    startFrame : frame_count - 60 * 5, // starts 5 seconds before timestamp
+    endFrame   : frame_count,
+    ts_frame   : frame_count, // frame timestamp button was pressed
     path       : latest_path,
     meta       : {
       latest_frame_data : latest_frame_data,

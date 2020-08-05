@@ -13,10 +13,10 @@ node server.js
 during slippi game, visit in browser (or send GET request)  
 `http://localhost:7789/timestamp`  
 your timestamp will be appended to `timestamps.txt`  
-format (separated by newlines): `FRAME_NUMBER,PATH`  
-
+play your most recently-saved replay by visiting:
+`http://localhost:7789/recent`  
 example timestamps.txt:  
 ```
-1924,C:\Users\kevin\Documents\Slippi\Game_20200803T161211.slp
-190,C:\Users\kevin\Documents\Slippi\Game_20200803T161502.slp
+{"startFrame":588,"endFrame":888,"ts_frame":888,"path":"C:\\Users\\kevin\\Documents\\Slippi\\Game_20200804T210400.slp"}
+{"startFrame":284,"endFrame":584,"ts_frame":584,"path":"C:\\Users\\kevin\\Documents\\Slippi\\Game_20200804T211025.slp"}
 ```

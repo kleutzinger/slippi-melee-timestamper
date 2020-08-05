@@ -26,8 +26,18 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [x] skip to that frame specified in the file
 - [x] accept POST request to start a timestamp (webpage of links/info?)
 - [x] GET request to /recent starts most recent timestamp.txt entry
-- - https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
+- [ ] smarter timing on saving replays?
+  - webpage with buttons to save last 10 sec or 5 sec or minute??
+- [ ] view replay.txt/launch replays from browser window
+  - /browse
+  - [ ] allow modification here
+- [ ] add meaningful metadata to distinguish saved timestamps quickly
 - [ ] after the game add a popup to ask for info on what each timestamp was about
+
+### Important Links
+- http://localhost:7789/timestamp  
+- http://localhost:7789/recent  
+- https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 
 ### Down the line:
 - [ ] output as youtube video
