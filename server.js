@@ -1,5 +1,3 @@
-var a = require('./timestamp');
-console.log(a);
 var open = require('open');
 const path = require('path');
 const config = require(path.join(process.cwd(), 'config.js'));
@@ -36,10 +34,14 @@ please modify your config.js -> slippi_output_dir
 }
 const sounds_dir = path.join(process.cwd(), 'sounds');
 
+const bodyParser = require('body-parser');
+const { isNumber } = require('lodash');
+const { startReplay } = require('./timestamp');
 var express = require('express'),
   app = express(),
   // port = process.env.PORT || 5669;
   port = config.port || 7789;
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), 'web')));
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
 app.use('/sounds', express.static(sounds_dir));
@@ -48,13 +50,32 @@ app.get('/timestamp', (req, res) => {
   console.log(JSON.stringify(latest_frame_data));
   console.log(`latest frame was ${frame_count}`);
   let outputObj = {
-    frame             : frame_count,
-    latest_frame_data : latest_frame_data,
-    state             : latest_game_state,
-    path              : latest_path
+    startFrame : frame_count,
+    endFrame   : frame_count + 60 * 5,
+    frame      : frame_count,
+    path       : latest_path,
+    meta       : {
+      latest_frame_data : latest_frame_data,
+      state             : latest_game_state
+    }
   };
   timestamp.writeTimestamp(outputObj, config.timestamp_output_path);
+  outputObj.meta = {
+    msg         : 'trying to write timestamp',
+    working_dir : __dirname
+  };
   res.json(outputObj);
+});
+
+app.get('/play_last', (req, res) => {});
+
+app.post('/play_slp', (req, res) => {
+  // needs {slp_path:___, start_frame:___}
+  const slp_path = req.body.slp_path;
+  const start_frame = req.body.start_frame;
+  if (slp_path && _.isNumber(start_frame)) {
+    timestamp.startReplay(slp_path, start_frame);
+  }
 });
 
 const server = app.listen(port, (req, res) => {
@@ -68,6 +89,8 @@ io.sockets.on('connection', function(socket) {
     console.log(JSON.stringify(latest_frame_data));
     console.log(`latest frame was ${frame_count}`);
     let outputObj = {
+      start_frame       : frame_count,
+      path              : null,
       frame             : frame_count,
       latest_frame_data : latest_frame_data
     };

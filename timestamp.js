@@ -3,6 +3,7 @@
 const fs = require('fs');
 var path = require('path');
 const _ = require('lodash');
+const { json } = require('express');
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 
@@ -11,14 +12,19 @@ const config = {
     'C:\\Users\\kevin\\AppData\\Roaming\\Slippi Desktop App\\dolphin\\Dolphin.exe'
 };
 
-function writeTimestamp(game_info, output_path) {
+function writeTimestamp(game_info, output_path, discard_meta = true) {
+  if (discard_meta) {
+    delete game_info.meta;
+  }
   let output_string = game_info_to_txt_line(game_info);
-  if (!output_string) {
-    console.log('no game_info supplied. is melee running?');
+  if (output_string === 'bad') {
+    console.log('no write. game_info incomplete. is melee running?');
+    console.log(game_info);
     return;
   }
-  fs.appendFile(output_path, output_string, function(err) {
-    console.log(`writing ${JSON.stringify(game_info)} to ${output_path}`);
+  fs.appendFile(output_path, output_string + '\n', function(err) {
+    // console.log(`writing ${JSON.stringify(game_info)} to ${output_path}`);
+    console.log(Date.now(), 'wrote');
     if (err) throw err;
     console.log('Saved!');
   });
@@ -27,8 +33,12 @@ function writeTimestamp(game_info, output_path) {
 function game_info_to_txt_line(game_info) {
   // take the gamestate info (stocks, players, percent...)
   // returnt the line to go into the text file
-  let output_string = `${game_info.frame},${game_info.path}\n`;
-  return output_string;
+  if (game_info.path === null) {
+    return 'bad';
+  }
+  return JSON.stringify(game_info);
+  // let output_string = `${game_info.frame},${game_info.path}\n`;
+  // return output_string;
 }
 
 function processTxtStamps(path) {
@@ -65,11 +75,11 @@ function launchReplays(timestamp_arr) {
     // result
   });
 }
-function startReplay(slp_path, start_frame = 0, duration = 60 * 7) {
+function startReplay(slp_path, startFrame = 0, duration = 60 * 7) {
   let tmpObj = {
     path       : slp_path,
-    startFrame : start_frame,
-    endFrame   : start_frame + duration
+    startFrame : startFrame,
+    endFrame   : startFrame + duration
   };
   launchReplays([ tmpObj ]);
 }
