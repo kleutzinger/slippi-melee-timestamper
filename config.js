@@ -1,10 +1,15 @@
+const { join } = require('path');
 const config = {
   // *********************************************
   // uncomment and edit below to set where slippi puts your .slp files
   // slippi_output_dir        : 'C:\\Users\\kevin\\Documents\\Slippi',
   // *********************************************
-  timestamp_output_path : './timestamps.txt',
+  replay_dolphin_path   :
+    'C:\\Users\\kevin\\AppData\\Roaming\\Slippi Desktop App\\dolphin\\Dolphin.exe',
+  timestamp_output_path : join(__dirname, 'timestamps.txt'),
   port                  : 7789,
+
+  // old stuff below
   fileChangeTimeoutMs   : 1200, // how long to wait after a game ends to quit out
   fileChangeDeltaPollMs : 250, // how often to check when a game
   autoClose2ndWebpage   : false, // broken

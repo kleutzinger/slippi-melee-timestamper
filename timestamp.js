@@ -2,15 +2,11 @@
 // get config
 const fs = require('fs');
 var path = require('path');
+const config = require(path.join(process.cwd(), 'config.js'));
 const _ = require('lodash');
 const { json } = require('express');
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
-
-const config = {
-  dolphin_path :
-    'C:\\Users\\kevin\\AppData\\Roaming\\Slippi Desktop App\\dolphin\\Dolphin.exe'
-};
 
 function writeTimestamp(game_info, output_path, discard_meta = true) {
   if (discard_meta) {
@@ -18,7 +14,9 @@ function writeTimestamp(game_info, output_path, discard_meta = true) {
   }
   let output_string = game_info_to_txt_line(game_info);
   if (output_string === 'bad') {
-    console.log('no write. game_info incomplete. is melee running?');
+    console.log(
+      '(timestamp.js) no write. game_info incomplete. is melee running?'
+    );
     console.log(game_info);
     return;
   }
@@ -68,7 +66,11 @@ function launchReplays(timestamp_arr) {
   const json_path = generateTempReplayFile(timestamp_arr);
   // const json_path = 'C:\\Users\\kevin\\Desktop\\combosnew.json';
   const args = [ '-i', json_path ];
-  execFile(config.dolphin_path, args, function callback(error, stdout, stderr) {
+  execFile(config.replay_dolphin_path, args, function callback(
+    error,
+    stdout,
+    stderr
+  ) {
     if (error) {
       console.log(error);
     }
@@ -82,6 +84,23 @@ function startReplay(slp_path, startFrame = 0, duration = 60 * 7) {
     endFrame   : startFrame + duration
   };
   launchReplays([ tmpObj ]);
+}
+
+function startTimestampObj(timestamp) {
+  console.log('starting timestamp obj ' + timestamp);
+  launchReplays([ timestamp ]);
+}
+
+function getRecentTimestamp() {
+  let lines = fs
+    .readFileSync(config.timestamp_output_path)
+    .toString()
+    .split('\n');
+  let last_line = lines[lines.length - 1];
+  while (last_line === '') {
+    last_line = lines.pop();
+  }
+  return JSON.parse(last_line);
 }
 
 const timestamp_example_obj = {
@@ -99,4 +118,9 @@ const timestamp_example_obj = {
 };
 // launchReplays([ timestamp_example_obj, timestamp_example_obj ]);
 // https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
-module.exports = { writeTimestamp, startReplay };
+module.exports = {
+  writeTimestamp,
+  startReplay,
+  startTimestampObj,
+  getRecentTimestamp
+};

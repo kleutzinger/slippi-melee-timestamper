@@ -24,7 +24,8 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [x] get it to launch dolphin (AppData\Roaming\Slippi Desktop App\dolphin\Dolphin.exe')
 - [x] get it to launch slippi replays
 - [x] skip to that frame specified in the file
-- [ ] accept POST request to start a timestamp (webpage of links/info?)
+- [x] accept POST request to start a timestamp (webpage of links/info?)
+- [x] GET request to /recent starts most recent timestamp.txt entry
 - - https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 - [ ] after the game add a popup to ask for info on what each timestamp was about
 

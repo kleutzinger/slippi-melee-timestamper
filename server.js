@@ -9,7 +9,6 @@ const chokidar = require('chokidar');
 const _ = require('lodash');
 const { connect } = require('http2');
 const { exit } = require('process');
-const timestamp = require('./timestamp');
 
 const homedir = require('os').homedir();
 if (!config.slippi_output_dir) {
@@ -36,7 +35,12 @@ const sounds_dir = path.join(process.cwd(), 'sounds');
 
 const bodyParser = require('body-parser');
 const { isNumber } = require('lodash');
-const { startReplay } = require('./timestamp');
+const {
+  startReplay,
+  writeTimestamp,
+  getRecentTimestamp,
+  startTimestampObj
+} = require('./timestamp');
 var express = require('express'),
   app = express(),
   // port = process.env.PORT || 5669;
@@ -46,9 +50,8 @@ app.use(express.static(path.join(process.cwd(), 'web')));
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
 app.use('/sounds', express.static(sounds_dir));
 app.get('/timestamp', (req, res) => {
-  console.log("let's make a timestamp");
-  console.log(JSON.stringify(latest_frame_data));
-  console.log(`latest frame was ${frame_count}`);
+  // console.log(JSON.stringify(latest_frame_data));
+  console.log(`(server.js) latest frame was ${frame_count}`);
   let outputObj = {
     startFrame : frame_count,
     endFrame   : frame_count + 60 * 5,
@@ -59,7 +62,7 @@ app.get('/timestamp', (req, res) => {
       state             : latest_game_state
     }
   };
-  timestamp.writeTimestamp(outputObj, config.timestamp_output_path);
+  writeTimestamp(outputObj, config.timestamp_output_path);
   outputObj.meta = {
     msg         : 'trying to write timestamp',
     working_dir : __dirname
@@ -67,7 +70,13 @@ app.get('/timestamp', (req, res) => {
   res.json(outputObj);
 });
 
-app.get('/play_last', (req, res) => {});
+app.get('/recent', (req, res) => {
+  // play the recentmost timestamp in timestamps.txt
+  const recent_timestamp = getRecentTimestamp();
+  startTimestampObj(recent_timestamp);
+  recent_timestamp.meta = { msg: 'launching this replay section!' };
+  res.json(recent_timestamp);
+});
 
 app.post('/play_slp', (req, res) => {
   // needs {slp_path:___, start_frame:___}
@@ -79,42 +88,13 @@ app.post('/play_slp', (req, res) => {
 });
 
 const server = app.listen(port, (req, res) => {
-  // console.log('Listening on port: ' + port);
-});
-const io = require('socket.io')(server);
-io.sockets.on('connection', function(socket) {
-  let connectedCount = Object.keys(io.sockets.sockets).length;
-  socket.on('timestamp_button', (msg) => {
-    console.log("let's make a timestamp");
-    console.log(JSON.stringify(latest_frame_data));
-    console.log(`latest frame was ${frame_count}`);
-    let outputObj = {
-      start_frame       : frame_count,
-      path              : null,
-      frame             : frame_count,
-      latest_frame_data : latest_frame_data
-    };
-    timestamp.writeTimestamp(outputObj, config.timestamp_output_path);
-  });
-  if (config.socketDebug) {
-    console.log(Object.keys(io.sockets.sockets));
-    console.log(`connection number ${connectedCount}`);
-  }
-  if (connectedCount > 1 && config.autoClose2ndWebpage) {
-    // socket.disconnect();
-    // socket.emit('closePage');
-    console.log('multiple instances running! closing');
-  }
-});
-
-if (config.autoOpenWebpageOnRun) {
-  console.log('opening local webpage at ' + `http://localhost:${port}`);
-  open(`http://localhost:${port}`);
-} else {
+  console.log('Listening on port: ' + port);
   console.log(
-    `please open in web browser or send GET request to:\n   http://localhost:${port}/timestamp`
+    `please open in web browser or send GET request to:\n` +
+      `http://localhost:${port}/timestamp  save a timestamp\n` +
+      `http://localhost:${port}/recent     play your most recent timestamp`
   );
-}
+});
 
 // ************************   Slippi stuff below ****** ******
 
@@ -160,7 +140,6 @@ watcher.on('change', (path) => {
         if (fileChangeTimeDelta > config.fileChangeTimeoutMs) {
           gameAborted = true;
           clearInterval(slippiFileActiveCheck);
-          io.emit('stopSong');
           console.log(
             `Game ended (no new frames for at least ${config.fileChangeTimeoutMs}ms)`
           );
@@ -218,7 +197,6 @@ watcher.on('change', (path) => {
       7 : 'No Contest'
     };
     console.log('Game over. Ending Song');
-    io.emit('stopSong');
     const endMessage = _.get(endTypes, gameEnd.gameEndMethod) || 'Unknown';
 
     const lrasText =
