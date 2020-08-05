@@ -21,9 +21,11 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] make project clippi-valid ouptut files?
 - [x] move button to AHK
 - - [ ] AHK bound to gamecube?? (dpad down)
+- [x] get it to launch dolphin (AppData\Roaming\Slippi Desktop App\dolphin\Dolphin.exe')
 - [ ] get it to launch slippi replays
 - [ ] skip to that frame specified in the file
 - - https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
+- [ ] after the game add a popup to ask for info on what each timestamp was about
 
 ### Down the line:
 - [ ] output as youtube video
