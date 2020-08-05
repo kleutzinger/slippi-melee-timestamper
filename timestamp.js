@@ -87,7 +87,7 @@ function startReplay(slp_path, startFrame = 0, duration = 60 * 7) {
 }
 
 function startTimestampObj(timestamp) {
-  console.log('starting timestamp obj ' + timestamp);
+  // console.log('starting timestamp obj ' + timestamp);
   launchReplays([ timestamp ]);
 }
 

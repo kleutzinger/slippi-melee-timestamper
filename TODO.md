@@ -33,7 +33,8 @@ this would allow you to go back and find cool combos or moments you've manually 
   - [ ] allow modification here
 - [ ] add meaningful metadata to distinguish saved timestamps quickly
 - [ ] after the game add a popup to ask for info on what each timestamp was about
-
+- [ ] investigate rewinding to a point BEFORE startFrame
+- [ ] figure out random high cpu usage on idle
 ### Important Links
 - http://localhost:7789/timestamp  
 - http://localhost:7789/recent  
