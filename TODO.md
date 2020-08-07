@@ -38,6 +38,14 @@ this would allow you to go back and find cool combos or moments you've manually 
 -  -  [ ] "play game from beginning?"
 - [ ] use pugJS /browse rendering
 - [ ] figure out random high cpu usage on idle
+- [ ] stage pictures with stock icons to distinguish timestamps visually
+- [ ] freeze timestmap json specified
+- [ ] accept that users will have to install node to use this
+- good timestamp metadatas:
+-  - [ ] `last_stock_lost: frame_no` (array?)
+-  - [ ] slippi tags/connect codes
+-  - [ ] date (of ingametime or irl clock? (same thing??))
+- [ ] ```function frame_to_igt(frame_count) {}```
 ### Important Links
 - http://localhost:7789/timestamp  
 - http://localhost:7789/recent  
