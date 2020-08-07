@@ -17,7 +17,7 @@ function writeTimestamp(game_info, output_path, discard_meta = true) {
     console.log(
       '(timestamp.js) no write. game_info incomplete. is melee running?'
     );
-    console.log(game_info);
+    // console.log(game_info);
     return;
   }
   fs.appendFile(output_path, output_string + '\n', function(err) {
@@ -34,7 +34,7 @@ function game_info_to_txt_line(game_info) {
   if (game_info.path === null) {
     return 'bad';
   }
-  console.log(game_info);
+  // console.log(game_info);
   return JSON.stringify(game_info);
   // let output_string = `${game_info.frame},${game_info.path}\n`;
   // return output_string;
@@ -73,6 +73,7 @@ function launchReplays(timestamp_arr) {
     stderr
   ) {
     if (error) {
+      console.log('error executing replay dolphin');
       console.log(error);
     }
     // result
@@ -92,36 +93,49 @@ function startTimestampObj(timestamp) {
   launchReplays([ timestamp ]);
 }
 
-function getRecentTimestamp() {
+function getAllTimestampsArr() {
   let lines = fs
     .readFileSync(config.timestamp_output_path)
     .toString()
     .split('\n');
-  let last_line = lines[lines.length - 1];
-  while (last_line === '') {
-    last_line = lines.pop();
+  let timestamps = [];
+  for (const line of lines) {
+    try {
+      const cur = JSON.parse(line);
+      timestamps.push(cur);
+    } catch (error) {
+      // console.log(`error on ${line}\n` + error);
+    }
   }
-  return JSON.parse(last_line);
+  return timestamps;
 }
 
-const timestamp_example_obj = {
-  path        : 'C:\\Users\\kevin\\Documents\\Slippi\\Game_20200731T205716.slp',
-  gameStartAt : '06/22/20 10:48 am',
-  startFrame  : 200,
-  endFrame    : 1000,
-  metadata    : {
-    description : 'hella sick knee',
-    dmg_done    : 0,
-    gamestate   : {},
-    stage       : '',
-    chars       : 'falcon/peach'
+function getRecentTimestamp() {
+  const all = getAllTimestampsArr();
+  return all[all.length - 1];
+}
+
+console.log(getRecentTimestamp());
+
+function frame_to_igt(frame_count) {
+  if (frame_count <= 0) {
+    // return '08:00.00';
+    frame_count = 0;
   }
-};
-// launchReplays([ timestamp_example_obj, timestamp_example_obj ]);
+  const seconds_elapsed = frame_count / 60;
+  const eight_min = 60 * 8;
+  const igt = new Date((eight_min - seconds_elapsed) * 1000)
+    .toISOString()
+    .substr(14, 8);
+  return igt;
+}
+
 // https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 module.exports = {
   writeTimestamp,
   startReplay,
   startTimestampObj,
-  getRecentTimestamp
+  getRecentTimestamp,
+  getAllTimestampsArr,
+  frame_to_igt
 };

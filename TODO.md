@@ -30,6 +30,7 @@ this would allow you to go back and find cool combos or moments you've manually 
   - webpage with buttons to save last 10 sec or 5 sec or minute??
 - [ ] view replay.txt/launch replays from browser window
   - /browse
+  - [x] `getAllTimestampArr() => [ts1,ts2,...]`
   - [ ] allow modification here
 - [x] add meaningful metadata to distinguish saved timestamps quickly
 - [?] prune frame data some
@@ -37,15 +38,16 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] investigate rewinding to a point BEFORE startFrame
 -  -  [ ] "play game from beginning?"
 - [ ] use pugJS /browse rendering
+
 - [ ] figure out random high cpu usage on idle
 - [ ] stage pictures with stock icons to distinguish timestamps visually
-- [ ] freeze timestmap json specified
+- [ ] freeze timestmap json specification
 - [ ] accept that users will have to install node to use this
 - good timestamp metadatas:
 -  - [ ] `last_stock_lost: frame_no` (array?)
 -  - [ ] slippi tags/connect codes
 -  - [ ] date (of ingametime or irl clock? (same thing??))
-- [ ] ```function frame_to_igt(frame_count) {}```
+- [x] ```function frame_to_igt(frame_count) {}```
 ### Important Links
 - http://localhost:7789/timestamp  
 - http://localhost:7789/recent  

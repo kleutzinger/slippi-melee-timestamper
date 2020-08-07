@@ -39,7 +39,8 @@ const {
   startReplay,
   writeTimestamp,
   getRecentTimestamp,
-  startTimestampObj
+  startTimestampObj,
+  getAllTimestampsArr
 } = require('./timestamp');
 var express = require('express'),
   app = express(),
@@ -56,12 +57,13 @@ app.get('/timestamp', (req, res) => {
     startFrame : frame_count - 60 * 5, // starts 5 seconds before timestamp
     endFrame   : frame_count,
     ts_frame   : frame_count, // frame timestamp button was pressed
-    uid        : `${Math.random()}`,
+    uid        : `${Date.now()}`,
     path       : latest_path,
     meta       : {
       game_state  : latest_game_state,
       p1_p2_frame : latest_player1_2,
-      desc        : ''
+      desc        : '',
+      igt         : '0'
     }
   };
   writeTimestamp(outputObj, config.timestamp_output_path);
@@ -81,7 +83,7 @@ app.get('/recent', (req, res) => {
 });
 
 app.get('/browse', (req, res) => {
-  res.json({ soon: 'thisll work' });
+  res.json({ all: getAllTimestampsArr() });
 });
 
 app.post('/play_slp', (req, res) => {
