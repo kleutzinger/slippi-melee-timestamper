@@ -56,10 +56,12 @@ app.get('/timestamp', (req, res) => {
     startFrame : frame_count - 60 * 5, // starts 5 seconds before timestamp
     endFrame   : frame_count,
     ts_frame   : frame_count, // frame timestamp button was pressed
+    uid        : `${Math.random()}`,
     path       : latest_path,
     meta       : {
-      latest_frame_data : latest_frame_data,
-      state             : latest_game_state
+      game_state  : latest_game_state,
+      p1_p2_frame : latest_player1_2,
+      desc        : ''
     }
   };
   writeTimestamp(outputObj, config.timestamp_output_path);
@@ -78,6 +80,10 @@ app.get('/recent', (req, res) => {
   res.json(recent_timestamp);
 });
 
+app.get('/browse', (req, res) => {
+  res.json({ soon: 'thisll work' });
+});
+
 app.post('/play_slp', (req, res) => {
   // needs {slp_path:___, start_frame:___}
   const slp_path = req.body.slp_path;
@@ -92,7 +98,8 @@ const server = app.listen(port, (req, res) => {
   console.log(
     `please open in web browser or send GET request to:\n` +
       `http://localhost:${port}/timestamp  save a timestamp\n` +
-      `http://localhost:${port}/recent     play your most recent timestamp`
+      `http://localhost:${port}/recent     play your most recent timestamp\n` +
+      `http://localhost:${port}/browse     watch and find your clips`
   );
 });
 
@@ -105,9 +112,9 @@ const listenPath = process.argv[2] || config['slippi_output_dir'];
 var timeOfLastFileChange = null;
 var gameAborted = false;
 var frame_count = 0;
-var latest_frame_data = null;
 var latest_game_state = null;
 var latest_path = null;
+var latest_player1_2 = {};
 
 const watcher = chokidar.watch(listenPath, {
   ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
@@ -170,24 +177,27 @@ watcher.on('change', (path) => {
     let stage_info = stage_id_info[stage_id];
     gameState.settings = settings;
   }
+  let player1_2 = {};
 
   // console.log(`We have ${_.size(frames)} frames.`);
-  _.forEach(settings.players, (player) => {
+  settings.players.forEach((player, idx) => {
     const frameData = _.get(latestFrame, [ 'players', player.playerIndex ]);
     if (!frameData) {
       return;
     }
+    // P1/P2 Dependent: player, settings.players
     if (frameData.post) {
       frame_count = frameData.post.frame;
-      latest_frame_data = frameData;
       latest_game_state = gameState;
       latest_path = path;
+      player1_2[idx] = frameData;
     }
     // console.log(
     //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
     //     `${frameData.post.stocksRemaining} stocks`
     // );
   });
+  latest_player1_2 = player1_2;
   if (gameEnd) {
     // NOTE: These values and the quitter index will not work until 2.0.0 recording code is
     // NOTE: used. This code has not been publicly released yet as it still has issues

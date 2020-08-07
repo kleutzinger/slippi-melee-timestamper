@@ -9,10 +9,10 @@ var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 
 function writeTimestamp(game_info, output_path, discard_meta = true) {
+  let output_string = game_info_to_txt_line(game_info);
   if (discard_meta) {
     delete game_info.meta;
   }
-  let output_string = game_info_to_txt_line(game_info);
   if (output_string === 'bad') {
     console.log(
       '(timestamp.js) no write. game_info incomplete. is melee running?'
@@ -34,6 +34,7 @@ function game_info_to_txt_line(game_info) {
   if (game_info.path === null) {
     return 'bad';
   }
+  console.log(game_info);
   return JSON.stringify(game_info);
   // let output_string = `${game_info.frame},${game_info.path}\n`;
   // return output_string;

@@ -18,7 +18,7 @@ this would allow you to go back and find cool combos or moments you've manually 
 - - - timestamps.txt => 22222,path/path/game.slp
 - [x] listen for POST/GET requests on server
 - [x] look into processing text files for Slippi Launcher (launch replay at that timestamp)
-- [ ] make project clippi-valid ouptut files?
+- [x] make project clippi-valid ouptut files? (on the fly)
 - [x] move button to AHK
 - - [ ] AHK bound to gamecube?? (dpad down)
 - [x] get it to launch dolphin (AppData\Roaming\Slippi Desktop App\dolphin\Dolphin.exe')
@@ -31,13 +31,17 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] view replay.txt/launch replays from browser window
   - /browse
   - [ ] allow modification here
-- [ ] add meaningful metadata to distinguish saved timestamps quickly
+- [x] add meaningful metadata to distinguish saved timestamps quickly
+- [?] prune frame data some
 - [ ] after the game add a popup to ask for info on what each timestamp was about
 - [ ] investigate rewinding to a point BEFORE startFrame
+-  -  [ ] "play game from beginning?"
+- [ ] use pugJS /browse rendering
 - [ ] figure out random high cpu usage on idle
 ### Important Links
 - http://localhost:7789/timestamp  
 - http://localhost:7789/recent  
+- http://localhost:7789/browse  
 - https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 
 ### Down the line:
