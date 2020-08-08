@@ -1,0 +1,494 @@
+{
+  "timestamps": [
+    {
+      "startFrame": 13880,
+      "endFrame": 14180,
+      "ts_frame": 14180,
+      "uid": "0.4466991633600961",
+      "path": "C:\\Users\\kevin\\Documents\\Slippi\\Game_20200806T190803.slp",
+      "meta": {
+        "game_state": {
+          "settings": {
+            "isTeams": false,
+            "isPAL": false,
+            "stageId": 3,
+            "players": [
+              {
+                "playerIndex": 0,
+                "port": 1,
+                "characterId": 19,
+                "characterColor": 3,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              },
+              {
+                "playerIndex": 1,
+                "port": 2,
+                "characterId": 19,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              }
+            ]
+          },
+          "detectedPunishes": {}
+        },
+        "p1_p2_frame": {
+          "0": {
+            "pre": {
+              "frame": 14180,
+              "playerIndex": 0,
+              "isFollower": false,
+              "seed": 937379561,
+              "actionStateId": 359,
+              "positionX": 98.28627014160156,
+              "positionY": 0.00009999999747378752,
+              "facingDirection": 1,
+              "joystickX": 0,
+              "joystickY": -0.9750000238418579,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 131584,
+              "physicalButtons": 512,
+              "physicalLTrigger": 0,
+              "physicalRTrigger": 0.0071428571827709675,
+              "percent": 17.360000610351562
+            },
+            "post": {
+              "frame": 14180,
+              "playerIndex": 0,
+              "isFollower": false,
+              "internalCharacterId": 7,
+              "actionStateId": 359,
+              "positionX": 100.23626708984375,
+              "positionY": 0.00009999999747378752,
+              "facingDirection": 1,
+              "percent": 17.360000610351562,
+              "shieldSize": 60,
+              "lastAttackLanded": 11,
+              "currentComboCount": 1,
+              "lastHitBy": 6,
+              "stocksRemaining": 1,
+              "actionStateCounter": 36
+            }
+          },
+          "1": {
+            "pre": {
+              "frame": 14180,
+              "playerIndex": 1,
+              "isFollower": false,
+              "seed": 937379561,
+              "actionStateId": 4,
+              "positionX": 17.61418914794922,
+              "positionY": 71.99957275390625,
+              "facingDirection": 1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0,
+              "physicalRTrigger": 0,
+              "percent": 138.39353942871094
+            },
+            "post": {
+              "frame": 14180,
+              "playerIndex": 1,
+              "isFollower": false,
+              "internalCharacterId": 7,
+              "actionStateId": 4,
+              "positionX": 17.61418914794922,
+              "positionY": 71.99957275390625,
+              "facingDirection": 1,
+              "percent": 138.39353942871094,
+              "shieldSize": 60,
+              "lastAttackLanded": 6,
+              "currentComboCount": 1,
+              "lastHitBy": 0,
+              "stocksRemaining": 0,
+              "actionStateCounter": 11
+            }
+          }
+        },
+        "desc": ""
+      }
+    },
+    {
+      "startFrame": -368,
+      "endFrame": -68,
+      "ts_frame": -68,
+      "uid": "1596766840585",
+      "path": "C:\\Users\\kevin\\Documents\\Slippi\\Game_20200806T192039.slp",
+      "meta": {
+        "game_state": {
+          "settings": {
+            "isTeams": false,
+            "isPAL": false,
+            "stageId": 28,
+            "players": [
+              {
+                "playerIndex": 0,
+                "port": 1,
+                "characterId": 2,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              },
+              {
+                "playerIndex": 1,
+                "port": 2,
+                "characterId": 20,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              }
+            ]
+          },
+          "detectedPunishes": {}
+        },
+        "p1_p2_frame": {
+          "0": {
+            "pre": {
+              "frame": -68,
+              "playerIndex": 0,
+              "isFollower": false,
+              "seed": 3638229,
+              "actionStateId": 324,
+              "positionX": -46.599998474121094,
+              "positionY": 37.64920425415039,
+              "facingDirection": 1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0.014285714365541935,
+              "physicalRTrigger": 0.014285714365541935,
+              "percent": 0
+            },
+            "post": {
+              "frame": -68,
+              "playerIndex": 0,
+              "isFollower": false,
+              "internalCharacterId": 1,
+              "actionStateId": 324,
+              "positionX": -46.599998474121094,
+              "positionY": 37.60428237915039,
+              "facingDirection": 1,
+              "percent": 0,
+              "shieldSize": 60,
+              "lastAttackLanded": 0,
+              "currentComboCount": 0,
+              "lastHitBy": 6,
+              "stocksRemaining": 4,
+              "actionStateCounter": -1
+            }
+          },
+          "1": {
+            "pre": {
+              "frame": -68,
+              "playerIndex": 1,
+              "isFollower": false,
+              "seed": 3638229,
+              "actionStateId": 324,
+              "positionX": 47.400001525878906,
+              "positionY": 37.936370849609375,
+              "facingDirection": -1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0,
+              "physicalRTrigger": 0,
+              "percent": 0
+            },
+            "post": {
+              "frame": -68,
+              "playerIndex": 1,
+              "isFollower": false,
+              "internalCharacterId": 22,
+              "actionStateId": 324,
+              "positionX": 47.400001525878906,
+              "positionY": 37.89394760131836,
+              "facingDirection": -1,
+              "percent": 0,
+              "shieldSize": 60,
+              "lastAttackLanded": 0,
+              "currentComboCount": 0,
+              "lastHitBy": 6,
+              "stocksRemaining": 4,
+              "actionStateCounter": -1
+            }
+          }
+        },
+        "desc": ""
+      }
+    },
+    {
+      "startFrame": -295,
+      "endFrame": 5,
+      "ts_frame": 5,
+      "uid": "1596766841812",
+      "path": "C:\\Users\\kevin\\Documents\\Slippi\\Game_20200806T192039.slp",
+      "meta": {
+        "game_state": {
+          "settings": {
+            "isTeams": false,
+            "isPAL": false,
+            "stageId": 28,
+            "players": [
+              {
+                "playerIndex": 0,
+                "port": 1,
+                "characterId": 2,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              },
+              {
+                "playerIndex": 1,
+                "port": 2,
+                "characterId": 20,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              }
+            ]
+          },
+          "detectedPunishes": {}
+        },
+        "p1_p2_frame": {
+          "0": {
+            "pre": {
+              "frame": 5,
+              "playerIndex": 0,
+              "isFollower": false,
+              "seed": 8422357,
+              "actionStateId": 42,
+              "positionX": -18.542491912841797,
+              "positionY": 0.008900165557861328,
+              "facingDirection": 1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0.014285714365541935,
+              "physicalRTrigger": 0.014285714365541935,
+              "percent": 0
+            },
+            "post": {
+              "frame": 5,
+              "playerIndex": 0,
+              "isFollower": false,
+              "internalCharacterId": 1,
+              "actionStateId": 42,
+              "positionX": -18.15249252319336,
+              "positionY": 0.008899999782443047,
+              "facingDirection": 1,
+              "percent": 0,
+              "shieldSize": 60,
+              "lastAttackLanded": 0,
+              "currentComboCount": 0,
+              "lastHitBy": 6,
+              "stocksRemaining": 4,
+              "actionStateCounter": 1
+            }
+          },
+          "1": {
+            "pre": {
+              "frame": 5,
+              "playerIndex": 1,
+              "isFollower": false,
+              "seed": 8422357,
+              "actionStateId": 42,
+              "positionX": 47.75874710083008,
+              "positionY": 30.242599487304688,
+              "facingDirection": -1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0,
+              "physicalRTrigger": 0,
+              "percent": 0
+            },
+            "post": {
+              "frame": 5,
+              "playerIndex": 1,
+              "isFollower": false,
+              "internalCharacterId": 22,
+              "actionStateId": 42,
+              "positionX": 47.75874710083008,
+              "positionY": 30.242599487304688,
+              "facingDirection": -1,
+              "percent": 0,
+              "shieldSize": 60,
+              "lastAttackLanded": 0,
+              "currentComboCount": 0,
+              "lastHitBy": 6,
+              "stocksRemaining": 4,
+              "actionStateCounter": 5
+            }
+          }
+        },
+        "desc": ""
+      }
+    },
+    {
+      "startFrame": -7,
+      "endFrame": 293,
+      "ts_frame": 293,
+      "uid": "1596766846614",
+      "path": "C:\\Users\\kevin\\Documents\\Slippi\\Game_20200806T192039.slp",
+      "meta": {
+        "game_state": {
+          "settings": {
+            "isTeams": false,
+            "isPAL": false,
+            "stageId": 28,
+            "players": [
+              {
+                "playerIndex": 0,
+                "port": 1,
+                "characterId": 2,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              },
+              {
+                "playerIndex": 1,
+                "port": 2,
+                "characterId": 20,
+                "characterColor": 0,
+                "startStocks": 4,
+                "type": 0,
+                "teamId": 0,
+                "controllerFix": "UCF",
+                "nametag": ""
+              }
+            ]
+          },
+          "detectedPunishes": {}
+        },
+        "p1_p2_frame": {
+          "0": {
+            "pre": {
+              "frame": 293,
+              "playerIndex": 0,
+              "isFollower": false,
+              "seed": 27296725,
+              "actionStateId": 25,
+              "positionX": -9.935748100280762,
+              "positionY": 60.73219680786133,
+              "facingDirection": 1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0.0071428571827709675,
+              "physicalRTrigger": 0.014285714365541935,
+              "percent": 0
+            },
+            "post": {
+              "frame": 293,
+              "playerIndex": 0,
+              "isFollower": false,
+              "internalCharacterId": 1,
+              "actionStateId": 25,
+              "positionX": -8.977373123168945,
+              "positionY": 60.042198181152344,
+              "facingDirection": 1,
+              "percent": 0,
+              "shieldSize": 60,
+              "lastAttackLanded": 0,
+              "currentComboCount": 0,
+              "lastHitBy": 6,
+              "stocksRemaining": 4,
+              "actionStateCounter": 19
+            }
+          },
+          "1": {
+            "pre": {
+              "frame": 293,
+              "playerIndex": 1,
+              "isFollower": false,
+              "seed": 27296725,
+              "actionStateId": 73,
+              "positionX": -47.980648040771484,
+              "positionY": 0.008899999782443047,
+              "facingDirection": -1,
+              "joystickX": 0,
+              "joystickY": 0,
+              "cStickX": 0,
+              "cStickY": 0,
+              "trigger": 0,
+              "buttons": 0,
+              "physicalButtons": 0,
+              "physicalLTrigger": 0,
+              "physicalRTrigger": 0,
+              "percent": 0
+            },
+            "post": {
+              "frame": 293,
+              "playerIndex": 1,
+              "isFollower": false,
+              "internalCharacterId": 22,
+              "actionStateId": 73,
+              "positionX": -47.980648040771484,
+              "positionY": 0.008899999782443047,
+              "facingDirection": -1,
+              "percent": 0,
+              "shieldSize": 60,
+              "lastAttackLanded": 0,
+              "currentComboCount": 0,
+              "lastHitBy": 6,
+              "stocksRemaining": 4,
+              "actionStateCounter": 18.394445419311523
+            }
+          }
+        },
+        "desc": ""
+      }
+    }
+  ],
+  "user": {},
+  "count": 0
+}
