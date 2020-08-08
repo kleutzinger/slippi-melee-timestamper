@@ -38,7 +38,7 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] investigate rewinding to a point BEFORE startFrame
 -  -  [ ] "play game from beginning?"
 - [ ] use pugJS /browse rendering
-
+- [ ] you can leave most(all) of the gamestate inside the slp file
 - [ ] figure out random high cpu usage on idle
 - [ ] stage pictures with stock icons to distinguish timestamps visually
 - [ ] freeze timestmap json specification

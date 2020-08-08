@@ -3,12 +3,16 @@
     "chokidar": "^2.1.4",
     "express": "^4.17.1",
     "lodash": "^4.17.19",
+    "lowdb": "^1.0.0",
     "open": "^7.0.4",
     "slp-parser-js": "^2.3.0",
     "socket.io": "^2.3.0"
   },
   "pkg": {
-    "assets": [ "sounds/*", "web/*" ]
+    "assets": [
+      "sounds/*",
+      "web/*"
+    ]
   },
   "scripts": {
     "start": "node server.js",
@@ -17,6 +21,8 @@
   "bin": "server.js",
   "name": "slippi-melee-timestamper",
   "nodemonConfig": {
-    "ignore": [ "temp.json" ]
+    "ignore": [
+      "temp.json"
+    ]
   }
 }
