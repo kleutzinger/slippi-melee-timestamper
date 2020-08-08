@@ -7,6 +7,7 @@ const _ = require('lodash');
 const { json } = require('express');
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
+var api = require('./api.js');
 
 function writeTimestamp(game_info, output_path, discard_meta = true) {
   let output_string = game_info_to_txt_line(game_info);
@@ -94,28 +95,13 @@ function startTimestampObj(timestamp) {
 }
 
 function getAllTimestampsArr() {
-  let lines = fs
-    .readFileSync(config.timestamp_output_path)
-    .toString()
-    .split('\n');
-  let timestamps = [];
-  for (const line of lines) {
-    try {
-      const cur = JSON.parse(line);
-      timestamps.push(cur);
-    } catch (error) {
-      // console.log(`error on ${line}\n` + error);
-    }
-  }
-  return timestamps;
+  return api.getAllTimestampsArr();
 }
 
 function getRecentTimestamp() {
   const all = getAllTimestampsArr();
   return all[all.length - 1];
 }
-
-console.log(getRecentTimestamp());
 
 function frame_to_igt(frame_count) {
   if (frame_count <= 0) {

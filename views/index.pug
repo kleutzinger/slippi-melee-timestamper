@@ -1,0 +1,9 @@
+html
+  head
+    title= title
+  body
+    h1= message
+    button(type='button', onclick='fetch("http://localhost:7789/recent")' ) Recent
+    ul
+      each val in allTimestamps
+        button(type='button', onclick='fetch("http://localhost:7789/play_slp")' ) ts#unimp

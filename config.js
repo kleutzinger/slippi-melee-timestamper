@@ -10,6 +10,7 @@ const config = {
   port                  : 7789,
 
   // old stuff below
+  startFileWatch        : false,
   fileChangeTimeoutMs   : 1200, // how long to wait after a game ends to quit out
   fileChangeDeltaPollMs : 250, // how often to check when a game
   autoClose2ndWebpage   : false, // broken

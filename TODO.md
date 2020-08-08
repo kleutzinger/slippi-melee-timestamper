@@ -42,7 +42,7 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] figure out random high cpu usage on idle
 - [ ] stage pictures with stock icons to distinguish timestamps visually
 - [ ] freeze timestmap json specification
-- [ ] accept that users will have to install node to use this
+- [x] accept that users will have to install node to use this
 - good timestamp metadatas:
 -  - [ ] `last_stock_lost: frame_no` (array?)
 -  - [ ] slippi tags/connect codes

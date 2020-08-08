@@ -47,6 +47,7 @@ var express = require('express'),
   // port = process.env.PORT || 5669;
   port = config.port || 7789;
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'pug');
 app.use(express.static(path.join(process.cwd(), 'web')));
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
 app.use('/sounds', express.static(sounds_dir));
@@ -83,8 +84,14 @@ app.get('/recent', (req, res) => {
 });
 
 app.get('/browse', (req, res) => {
-  res.json({ all: getAllTimestampsArr() });
+  res.render('index', {
+    title         : 'Hey',
+    message       : 'Hello there!',
+    allTimestamps : getAllTimestampsArr()
+  });
 });
+
+app.get('/', function(req, res) {});
 
 app.post('/play_slp', (req, res) => {
   // needs {slp_path:___, start_frame:___}
@@ -127,95 +134,101 @@ const watcher = chokidar.watch(listenPath, {
 });
 
 const gameByPath = {};
-watcher.on('change', (path) => {
-  const start = Date.now();
-  timeOfLastFileChange = start;
-  let gameState, settings, stats, frames, latestFrame, gameEnd;
-  try {
-    let game = _.get(gameByPath, [ path, 'game' ]);
-    if (!game) {
-      console.log(`New file at: ${path}`);
-      gameAborted = false;
-      game = new SlippiGame(path);
-      gameByPath[path] = {
-        game  : game,
-        state : {
-          settings         : null,
-          detectedPunishes : {}
-        }
-      };
-      var slippiFileActiveCheck = setInterval(() => {
-        let fileChangeTimeDelta = Date.now() - timeOfLastFileChange;
-        if (fileChangeTimeDelta > config.fileChangeTimeoutMs) {
-          gameAborted = true;
-          clearInterval(slippiFileActiveCheck);
-          console.log(
-            `Game ended (no new frames for at least ${config.fileChangeTimeoutMs}ms)`
-          );
-        }
-      }, config.fileChangeDeltaPollMs);
-    }
 
-    gameState = _.get(gameByPath, [ path, 'state' ]);
+function startWatch() {
+  watcher.on('change', (path) => {
+    const start = Date.now();
+    timeOfLastFileChange = start;
+    let gameState, settings, stats, frames, latestFrame, gameEnd;
+    try {
+      let game = _.get(gameByPath, [ path, 'game' ]);
+      if (!game) {
+        console.log(`New file at: ${path}`);
+        gameAborted = false;
+        game = new SlippiGame(path);
+        gameByPath[path] = {
+          game  : game,
+          state : {
+            settings         : null,
+            detectedPunishes : {}
+          }
+        };
+        var slippiFileActiveCheck = setInterval(() => {
+          let fileChangeTimeDelta = Date.now() - timeOfLastFileChange;
+          if (fileChangeTimeDelta > config.fileChangeTimeoutMs) {
+            gameAborted = true;
+            clearInterval(slippiFileActiveCheck);
+            console.log(
+              `Game ended (no new frames for at least ${config.fileChangeTimeoutMs}ms)`
+            );
+          }
+        }, config.fileChangeDeltaPollMs);
+      }
 
-    settings = game.getSettings();
+      gameState = _.get(gameByPath, [ path, 'state' ]);
 
-    frames = game.getFrames();
-    latestFrame = game.getLatestFrame();
-    gameEnd = game.getGameEnd();
-  } catch (err) {
-    console.log(err);
-    return;
-  }
+      settings = game.getSettings();
 
-  if (!gameState.settings && settings) {
-    // new game startup
-    console.log(`[Game Start] New game has started`);
-    // console.log(settings);
-    // console.log(settings.stageId);
-    frame_count = 0;
-    let stage_id = settings.stageId;
-    console.log(stage_id_info[stage_id]);
-    let stage_info = stage_id_info[stage_id];
-    gameState.settings = settings;
-  }
-  let player1_2 = {};
-
-  // console.log(`We have ${_.size(frames)} frames.`);
-  settings.players.forEach((player, idx) => {
-    const frameData = _.get(latestFrame, [ 'players', player.playerIndex ]);
-    if (!frameData) {
+      frames = game.getFrames();
+      latestFrame = game.getLatestFrame();
+      gameEnd = game.getGameEnd();
+    } catch (err) {
+      console.log(err);
       return;
     }
-    // P1/P2 Dependent: player, settings.players
-    if (frameData.post) {
-      frame_count = frameData.post.frame;
-      latest_game_state = gameState;
-      latest_path = path;
-      player1_2[idx] = frameData;
-    }
-    // console.log(
-    //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
-    //     `${frameData.post.stocksRemaining} stocks`
-    // );
-  });
-  latest_player1_2 = player1_2;
-  if (gameEnd) {
-    // NOTE: These values and the quitter index will not work until 2.0.0 recording code is
-    // NOTE: used. This code has not been publicly released yet as it still has issues
-    const endTypes = {
-      1 : 'TIME!',
-      2 : 'GAME!',
-      7 : 'No Contest'
-    };
-    console.log('Game over. Ending Song');
-    const endMessage = _.get(endTypes, gameEnd.gameEndMethod) || 'Unknown';
 
-    const lrasText =
-      gameEnd.gameEndMethod === 7
-        ? ` | Quitter Index: ${gameEnd.lrasInitiatorIndex}`
-        : '';
-    console.log(`[Game Complete] Type: ${endMessage}${lrasText}`);
-  }
-  // console.log(`Read took: ${Date.now() - start} ms`);
-});
+    if (!gameState.settings && settings) {
+      // new game startup
+      console.log(`[Game Start] New game has started`);
+      // console.log(settings);
+      // console.log(settings.stageId);
+      frame_count = 0;
+      let stage_id = settings.stageId;
+      console.log(stage_id_info[stage_id]);
+      let stage_info = stage_id_info[stage_id];
+      gameState.settings = settings;
+    }
+    let player1_2 = {};
+
+    // console.log(`We have ${_.size(frames)} frames.`);
+    settings.players.forEach((player, idx) => {
+      const frameData = _.get(latestFrame, [ 'players', player.playerIndex ]);
+      if (!frameData) {
+        return;
+      }
+      // P1/P2 Dependent: player, settings.players
+      if (frameData.post) {
+        frame_count = frameData.post.frame;
+        latest_game_state = gameState;
+        latest_path = path;
+        player1_2[idx] = frameData;
+      }
+      // console.log(
+      //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
+      //     `${frameData.post.stocksRemaining} stocks`
+      // );
+    });
+    latest_player1_2 = player1_2;
+    if (gameEnd) {
+      // NOTE: These values and the quitter index will not work until 2.0.0 recording code is
+      // NOTE: used. This code has not been publicly released yet as it still has issues
+      const endTypes = {
+        1 : 'TIME!',
+        2 : 'GAME!',
+        7 : 'No Contest'
+      };
+      console.log('Game over. Ending Song');
+      const endMessage = _.get(endTypes, gameEnd.gameEndMethod) || 'Unknown';
+
+      const lrasText =
+        gameEnd.gameEndMethod === 7
+          ? ` | Quitter Index: ${gameEnd.lrasInitiatorIndex}`
+          : '';
+      console.log(`[Game Complete] Type: ${endMessage}${lrasText}`);
+    }
+    // console.log(`Read took: ${Date.now() - start} ms`);
+  });
+}
+if (config.startFileWatch) {
+  startWatch();
+}
