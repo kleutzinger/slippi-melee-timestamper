@@ -85,10 +85,15 @@ app.get('/recent', (req, res) => {
 
 app.get('/browse', (req, res) => {
   const allTimestampsArr = getAllTimestampsArr();
+  const { niceData } = require('./timestamp');
   res.render('index', {
     title            : 'Hey',
     message          : 'Hello there!',
-    allTimestamps    : allTimestampsArr,
+    allTimestamps    : getAllTimestampsArr().map((e) => {
+      let nice = niceData(e);
+      e.nice = nice;
+      return e;
+    }),
     allTimestampsStr : JSON.stringify(allTimestampsArr)
   });
 });

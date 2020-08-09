@@ -115,6 +115,33 @@ function frame_to_igt(frame_count) {
   return igt;
 }
 
+function niceData(ts) {
+  // give me a timestamp obj
+  // return object with useful data about the frame metadata
+  data = {};
+  // prettier-ignore
+  let stage_id = _.get(ts, 'meta.game_state.settings.stageId');
+  let stage_name = config.stage_id_info['' + stage_id].stage_name;
+  let player_0_settings = _.get(ts, 'meta.game_state.settings.players[0]');
+  let player_1_settings = _.get(ts, 'meta.game_state.settings.players[1]');
+
+  let p0_char = player_0_settings.characterId;
+  let p1_char = player_1_settings.characterId;
+  let p0_stock = _.get(ts, 'meta.p1_p2_frame["0"].post.stocksRemaining');
+  let p1_stock = _.get(ts, 'meta.p1_p2_frame["1"].post.stocksRemaining');
+  let igt = frame_to_igt(ts.startFrame);
+
+  let data_pool = {
+    ingame_time : igt,
+    stage_name  : stage_name,
+    stage_id,
+    p0_char,
+    p1_char,
+    p1_stock,
+    p0_stock
+  };
+  return data_pool;
+}
 // https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 module.exports = {
   writeTimestamp,
@@ -122,5 +149,6 @@ module.exports = {
   startTimestampObj,
   getRecentTimestamp,
   getAllTimestampsArr,
-  frame_to_igt
+  frame_to_igt,
+  niceData
 };

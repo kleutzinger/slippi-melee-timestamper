@@ -19,27 +19,27 @@ const config = {
   stage_id_info         : {
     '2'  : {
       dir_name   : 'fountain',
-      stage_name : 'FOUNTAIN_OF_DREAMS'
+      stage_name : 'Fountain of Dreams'
     },
     '8'  : {
       dir_name   : 'yoshis',
-      stage_name : 'YOSHIS_STORY'
+      stage_name : "Yoshi's Story"
     },
     '31' : {
       dir_name   : 'battlefield',
-      stage_name : 'BATTLEFIELD'
+      stage_name : 'Battlefield'
     },
     '32' : {
       dir_name   : 'final',
-      stage_name : 'FINAL_DESTINATION'
+      stage_name : 'Final Destination'
     },
     '3'  : {
       dir_name   : 'stadium',
-      stage_name : 'POKEMON_STADIUM'
+      stage_name : 'Pokémon Stadium'
     },
     '28' : {
       dir_name   : 'dreamland',
-      stage_name : 'DREAM_LAND_N64'
+      stage_name : 'Dream Land'
     },
     '4'  : {
       stage_name : 'PRINCESS_PEACHS_CASTLE'
