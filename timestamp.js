@@ -75,7 +75,6 @@ function launchReplays(timestamp_arr) {
   ) {
     if (error) {
       console.log('error executing replay dolphin');
-      console.log(error);
     }
     // result
   });
