@@ -28,19 +28,20 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [x] GET request to /recent starts most recent timestamp.txt entry
 - [ ] smarter timing on saving replays?
   - webpage with buttons to save last 10 sec or 5 sec or minute??
-- [ ] view replay.txt/launch replays from browser window
+- [x] view replay.txt/launch replays from browser window
   - /browse
   - [x] `getAllTimestampArr() => [ts1,ts2,...]`
   - [ ] allow modification here
 - [x] add meaningful metadata to distinguish saved timestamps quickly
 - [?] prune frame data some
+- [ ] make realtime or at least reload on newtimestamp
 - [ ] after the game add a popup to ask for info on what each timestamp was about
 - [ ] investigate rewinding to a point BEFORE startFrame
 -  -  [ ] "play game from beginning?"
-- [ ] use pugJS /browse rendering
+- [x] use pugJS /browse rendering
 - [ ] you can leave most(all) of the gamestate inside the slp file
 - [ ] figure out random high cpu usage on idle
-- [ ] stage pictures with stock icons to distinguish timestamps visually
+- [?] stage pictures with stock icons to distinguish timestamps visually
 - [ ] freeze timestmap json specification
 - [x] accept that users will have to install node to use this
 - good timestamp metadatas:
