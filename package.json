@@ -10,10 +10,7 @@
     "socket.io": "^2.3.0"
   },
   "pkg": {
-    "assets": [
-      "sounds/*",
-      "web/*"
-    ]
+    "assets": [ "sounds/*", "web/*" ]
   },
   "scripts": {
     "start": "node server.js",
@@ -22,8 +19,6 @@
   "bin": "server.js",
   "name": "slippi-melee-timestamper",
   "nodemonConfig": {
-    "ignore": [
-      "temp.json"
-    ]
+    "ignore": [ "temp.json", "*.json" ]
   }
 }

@@ -23,7 +23,7 @@ try {
     }
   }
 } catch (err) {
-  console.log(err);
+  // console.log(err);
 }
 if (!foundSlippiFiles) {
   console.log(`warning! no .slp files found in:
@@ -84,14 +84,22 @@ app.get('/recent', (req, res) => {
 });
 
 app.get('/browse', (req, res) => {
+  const allTimestampsArr = getAllTimestampsArr();
   res.render('index', {
-    title         : 'Hey',
-    message       : 'Hello there!',
-    allTimestamps : getAllTimestampsArr()
+    title            : 'Hey',
+    message          : 'Hello there!',
+    allTimestamps    : allTimestampsArr,
+    allTimestampsStr : JSON.stringify(allTimestampsArr)
   });
 });
 
-app.get('/', function(req, res) {});
+app.post('/api/getall', function(req, res) {
+  res.json(getAllTimestampsArr());
+});
+
+app.get('/api/update/:id', function(req, res) {
+  res.json(getAllTimestampsArr());
+});
 
 app.post('/play_slp', (req, res) => {
   // needs {slp_path:___, start_frame:___}

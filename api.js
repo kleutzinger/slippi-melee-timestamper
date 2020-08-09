@@ -7,6 +7,8 @@ const FileSync = require('lowdb/adapters/FileSync');
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
+const { startTimestampObj } = require('./timestamp');
+const { copyFile } = require('fs');
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ timestamps: [], user: {}, count: 0 }).write();
@@ -40,8 +42,21 @@ function niceData(ts) {
 }
 
 function pushTimestamp(ts) {
-  db.get();
+  db.get('timestamps').push(ts).write();
 }
 
+function getTimestampById(id) {
+  return db.get('timestamps').find({ uid: id }).value();
+}
+
+function updateTimestamp(ts) {
+  db
+    .get('timestamps')
+    .find({ uid: ts.uid }) // Lodash shorthand syntax
+    .assign(ts)
+    .write();
+}
+
+// console.log(getTimestampById('0.4466991633600961'));
 // console.log(getAllTimestampsArr());
 module.exports = { getAllTimestampsArr };
