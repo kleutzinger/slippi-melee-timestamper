@@ -39,9 +39,9 @@ const {
   startReplay,
   writeTimestamp,
   getRecentTimestamp,
-  startTimestampObj,
-  getAllTimestampsArr
+  startTimestampObj
 } = require('./timestamp');
+const { getAllTimestampsArr, getTimestampById } = require('./api');
 var express = require('express'),
   app = express(),
   // port = process.env.PORT || 5669;
@@ -107,6 +107,18 @@ app.post('/play_slp', (req, res) => {
   const start_frame = req.body.start_frame;
   if (slp_path && _.isNumber(start_frame)) {
     timestamp.startReplay(slp_path, start_frame);
+  }
+});
+
+app.get('/play_slp/:id', (req, res) => {
+  try {
+    let timestamp_id = req.params.id;
+    let timestamp = getTimestampById(timestamp_id);
+    startTimestampObj(timestamp);
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    res.json('err');
   }
 });
 
