@@ -59,4 +59,4 @@ function updateTimestamp(ts) {
 
 // console.log(getTimestampById('0.4466991633600961'));
 // console.log(getAllTimestampsArr());
-module.exports = { getAllTimestampsArr, getTimestampById };
+module.exports = { getAllTimestampsArr };
