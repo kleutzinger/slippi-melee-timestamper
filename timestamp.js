@@ -121,6 +121,9 @@ function niceData(ts) {
   data = {};
   // prettier-ignore
   let stage_id = _.get(ts, 'meta.game_state.settings.stageId');
+  if (stage_id === undefined) {
+    return {};
+  }
   let stage_name = config.stage_id_info['' + stage_id].stage_name;
   let player_0_settings = _.get(ts, 'meta.game_state.settings.players[0]');
   let player_1_settings = _.get(ts, 'meta.game_state.settings.players[1]');
