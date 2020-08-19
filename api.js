@@ -7,7 +7,6 @@ const FileSync = require('lowdb/adapters/FileSync');
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
-const { startTimestampObj } = require('./timestamp');
 const { copyFile } = require('fs');
 
 // Set some defaults (required if your JSON file is empty)
