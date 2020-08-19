@@ -11,4 +11,4 @@ html
     button(type='button', onclick='fetch("http://localhost:7789/recent")' ) Recent
     ul
       each val, index in allTimestamps
-        button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.nice.ingame_time}
+        button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.meta.desc} #{val.nice.ingame_time}

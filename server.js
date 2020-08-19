@@ -150,17 +150,18 @@ var latest_game_state = null;
 var latest_path = null;
 var latest_player1_2 = {};
 
-const watcher = chokidar.watch(listenPath, {
-  ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
-  depth         : 0,
-  persistent    : true,
-  usePolling    : true,
-  ignoreInitial : true
-});
-
 const gameByPath = {};
 
 function startWatch() {
+  console.log('starting filewatch');
+  const watcher = chokidar.watch('.', {
+    ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
+    depth         : 0,
+    persistent    : true,
+    usePolling    : true,
+    ignoreInitial : true
+  });
+
   watcher.on('change', (path) => {
     const start = Date.now();
     timeOfLastFileChange = start;
@@ -256,4 +257,7 @@ function startWatch() {
 }
 if (config.startFileWatch) {
   startWatch();
+  // setTimeout(() => {
+  //   startWatch();
+  // }, 2000);
 }
