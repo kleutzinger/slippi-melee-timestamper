@@ -41,7 +41,12 @@ const {
   getRecentTimestamp,
   startTimestampObj
 } = require('./timestamp');
-const { getAllTimestampsArr, getTimestampById } = require('./api');
+const {
+  getAllTimestampsArr,
+  getTimestampById,
+  pushTimestamp,
+  updateTimestamp
+} = require('./api');
 var express = require('express'),
   app = express(),
   // port = process.env.PORT || 5669;
@@ -67,11 +72,15 @@ app.get('/timestamp', (req, res) => {
       igt         : '0'
     }
   };
-  writeTimestamp(outputObj, config.timestamp_output_path);
-  outputObj.meta = {
-    msg         : 'trying to write timestamp',
-    working_dir : __dirname
-  };
+  // writeTimestamp(outputObj, config.timestamp_output_path); // legacy wirte to .txt
+  const { niceData } = require('./timestamp');
+  outputObj.nice = niceData(outputObj);
+  pushTimestamp(outputObj);
+  console.log('wrote: ', outputObj.nice);
+  // outputObj.meta = {
+  //   msg         : 'trying to write timestamp',
+  //   working_dir : __dirname
+  // };
   res.json(outputObj);
 });
 
@@ -99,6 +108,10 @@ app.get('/browse', (req, res) => {
 });
 
 app.post('/api/getall', function(req, res) {
+  res.json(getAllTimestampsArr());
+});
+
+app.get('/api/getall', function(req, res) {
   res.json(getAllTimestampsArr());
 });
 
@@ -149,114 +162,155 @@ var frame_count = 0;
 var latest_game_state = null;
 var latest_path = null;
 var latest_player1_2 = {};
+var lastFileCount = -1;
+var recentMostFile = '';
+var watchHistory = [];
 
 const gameByPath = {};
 
-function startWatch() {
-  console.log('starting filewatch');
-  const watcher = chokidar.watch(listenPath, {
-    ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
-    depth         : 0,
-    persistent    : true,
-    usePolling    : true,
-    ignoreInitial : true
-  });
-
-  watcher.on('change', (path) => {
-    const start = Date.now();
-    timeOfLastFileChange = start;
-    let gameState, settings, stats, frames, latestFrame, gameEnd;
-    try {
-      let game = _.get(gameByPath, [ path, 'game' ]);
-      if (!game) {
-        console.log(`New file at: ${path}`);
-        gameAborted = false;
-        game = new SlippiGame(path);
-        gameByPath[path] = {
-          game  : game,
-          state : {
-            settings         : null,
-            detectedPunishes : {}
-          }
-        };
-        var slippiFileActiveCheck = setInterval(() => {
-          let fileChangeTimeDelta = Date.now() - timeOfLastFileChange;
-          if (fileChangeTimeDelta > config.fileChangeTimeoutMs) {
-            gameAborted = true;
-            clearInterval(slippiFileActiveCheck);
-            console.log(
-              `Game ended (no new frames for at least ${config.fileChangeTimeoutMs}ms)`
-            );
-          }
-        }, config.fileChangeDeltaPollMs);
-      }
-
-      gameState = _.get(gameByPath, [ path, 'state' ]);
-
-      settings = game.getSettings();
-
-      frames = game.getFrames();
-      latestFrame = game.getLatestFrame();
-      gameEnd = game.getGameEnd();
-    } catch (err) {
-      console.log(err);
-      return;
+function pollDirForNewFiles(_path) {
+  fs.readdir(_path, (err, files) => {
+    const fileCount = files.length;
+    if (fileCount != lastFileCount) {
+      lastFileCount = fileCount;
+      handleNewFile(files, _path);
     }
-
-    if (!gameState.settings && settings) {
-      // new game startup
-      console.log(`[Game Start] New game has started`);
-      // console.log(settings);
-      // console.log(settings.stageId);
-      frame_count = 0;
-      let stage_id = settings.stageId;
-      console.log(stage_id_info[stage_id]);
-      let stage_info = stage_id_info[stage_id];
-      gameState.settings = settings;
-    }
-    let player1_2 = {};
-
-    // console.log(`We have ${_.size(frames)} frames.`);
-    settings.players.forEach((player, idx) => {
-      const frameData = _.get(latestFrame, [ 'players', player.playerIndex ]);
-      if (!frameData) {
-        return;
-      }
-      // P1/P2 Dependent: player, settings.players
-      if (frameData.post) {
-        frame_count = frameData.post.frame;
-        latest_game_state = gameState;
-        latest_path = path;
-        player1_2[idx] = frameData;
-      }
-      // console.log(
-      //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
-      //     `${frameData.post.stocksRemaining} stocks`
-      // );
-    });
-    latest_player1_2 = player1_2;
-    if (gameEnd) {
-      // NOTE: These values and the quitter index will not work until 2.0.0 recording code is
-      // NOTE: used. This code has not been publicly released yet as it still has issues
-      const endTypes = {
-        1 : 'TIME!',
-        2 : 'GAME!',
-        7 : 'No Contest'
-      };
-      console.log('Game over. Ending Song');
-      const endMessage = _.get(endTypes, gameEnd.gameEndMethod) || 'Unknown';
-
-      const lrasText =
-        gameEnd.gameEndMethod === 7
-          ? ` | Quitter Index: ${gameEnd.lrasInitiatorIndex}`
-          : '';
-      console.log(`[Game Complete] Type: ${endMessage}${lrasText}`);
-    }
-    // console.log(`Read took: ${Date.now() - start} ms`);
   });
 }
+
+async function sendFileToChokidar(filepath) {
+  // console.log(`set chok to ${filepath}`);
+  watcher.add(filepath);
+  for (const p of watchHistory) {
+    // remove old watched files
+    watcher.unwatch(watchHistory);
+  }
+  watchHistory.push(filepath);
+  // console.log('currently watching: ', watcher.getWatched());
+}
+
+function handleNewFile(files, basedir) {
+  const newestFilename = _.max(files); // newest by filename
+  const newest = path.resolve(basedir, newestFilename);
+  console.log(`newest file: ${newest}`);
+  recentMostFile = newest;
+  sendFileToChokidar(newest);
+  // console.log(path.resolve(basedir, newest));
+  // unwatch previous file, watch this one
+  // chokidar.watching.foreach(e => unwatch(e))
+  // chokidar.watch(newest)
+}
+
+const watcher = chokidar.watch('', {
+  ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
+  depth         : 0,
+  persistent    : true,
+  usePolling    : true,
+  ignoreInitial : true
+});
+
+setInterval(() => {
+  pollDirForNewFiles(config.slippi_output_dir);
+}, 1000);
+
+// console.log(watcher.getWatched());
+
+watcher.on('change', (path) => {
+  // console.log(watcher.getWatched());
+  const start = Date.now();
+  timeOfLastFileChange = start;
+  let gameState, settings, stats, frames, latestFrame, gameEnd;
+  try {
+    let game = _.get(gameByPath, [ path, 'game' ]);
+    if (!game) {
+      console.log(`New file at: ${path}`);
+      gameAborted = false;
+      game = new SlippiGame(path);
+      gameByPath[path] = {
+        game  : game,
+        state : {
+          settings         : null,
+          detectedPunishes : {}
+        }
+      };
+      var slippiFileActiveCheck = setInterval(() => {
+        let fileChangeTimeDelta = Date.now() - timeOfLastFileChange;
+        if (fileChangeTimeDelta > config.fileChangeTimeoutMs) {
+          gameAborted = true;
+          clearInterval(slippiFileActiveCheck);
+          console.log(
+            `Game ended (no new frames for at least ${config.fileChangeTimeoutMs}ms)`
+          );
+        }
+      }, config.fileChangeDeltaPollMs);
+    }
+
+    gameState = _.get(gameByPath, [ path, 'state' ]);
+
+    settings = game.getSettings();
+
+    frames = game.getFrames();
+    latestFrame = game.getLatestFrame();
+    gameEnd = game.getGameEnd();
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+
+  if (!gameState.settings && settings) {
+    // new game startup
+    console.log(`[Game Start] New game has started`);
+    // console.log(settings);
+    // console.log(settings.stageId);
+    frame_count = 0;
+    let stage_id = settings.stageId;
+    console.log(stage_id_info[stage_id]);
+    let stage_info = stage_id_info[stage_id];
+    gameState.settings = settings;
+  }
+  let player1_2 = {};
+
+  // console.log(`We have ${_.size(frames)} frames.`);
+  settings.players.forEach((player, idx) => {
+    const frameData = _.get(latestFrame, [ 'players', player.playerIndex ]);
+    if (!frameData) {
+      return;
+    }
+    // P1/P2 Dependent: player, settings.players
+    if (frameData.post) {
+      frame_count = frameData.post.frame;
+      latest_game_state = gameState;
+      latest_path = path;
+      player1_2[idx] = frameData;
+    }
+    // console.log(
+    //   `[Port ${player.port}] ${frameData.post.percent.toFixed(1)}% | ` +
+    //     `${frameData.post.stocksRemaining} stocks`
+    // );
+  });
+  latest_player1_2 = player1_2;
+  if (gameEnd) {
+    // NOTE: These values and the quitter index will not work until 2.0.0 recording code is
+    // NOTE: used. This code has not been publicly released yet as it still has issues
+    const endTypes = {
+      1 : 'TIME!',
+      2 : 'GAME!',
+      7 : 'No Contest'
+    };
+    console.log('Game over. Ending Song');
+    const endMessage = _.get(endTypes, gameEnd.gameEndMethod) || 'Unknown';
+
+    const lrasText =
+      gameEnd.gameEndMethod === 7
+        ? ` | Quitter Index: ${gameEnd.lrasInitiatorIndex}`
+        : '';
+    console.log(`[Game Complete] Type: ${endMessage}${lrasText}`);
+  }
+  // console.log(`Read took: ${Date.now() - start} ms`);
+});
+
 if (config.startFileWatch) {
-  startWatch();
+  // startWatch();
   // setTimeout(() => {
   //   startWatch();
   // }, 2000);
