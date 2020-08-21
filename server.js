@@ -154,7 +154,7 @@ const gameByPath = {};
 
 function startWatch() {
   console.log('starting filewatch');
-  const watcher = chokidar.watch('.', {
+  const watcher = chokidar.watch(listenPath, {
     ignored       : '!*.slp', // TODO: This doesn't work. Use regex?
     depth         : 0,
     persistent    : true,
