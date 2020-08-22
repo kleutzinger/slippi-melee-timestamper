@@ -5,5 +5,15 @@
 }
 
 li p {
-  display:inline;
+  display: inline;
+}
+
+button.red {
+  width: 10%;
+  color: white;
+  background-color: #800;
+  border-color: #800;
+}
+div.ts-container {
+  position: relative;
 }
