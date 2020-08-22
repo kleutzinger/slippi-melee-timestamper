@@ -75,8 +75,12 @@ app.get('/timestamp', (req, res) => {
   // writeTimestamp(outputObj, config.timestamp_output_path); // legacy wirte to .txt
   const { niceData } = require('./timestamp');
   outputObj.nice = niceData(outputObj);
-  pushTimestamp(outputObj);
-  console.log('wrote: ', outputObj.nice);
+  if (latest_path != null) {
+    pushTimestamp(outputObj);
+    console.log('wrote: ', outputObj.nice);
+  } else {
+    console.log('no write, game uninitialized?');
+  }
   // outputObj.meta = {
   //   msg         : 'trying to write timestamp',
   //   working_dir : __dirname
@@ -145,7 +149,7 @@ const server = app.listen(port, (req, res) => {
   console.log(
     `please open in web browser or send GET request to:\n` +
       `http://localhost:${port}/timestamp  save a timestamp\n` +
-      `http://localhost:${port}/recent     play your most recent timestamp\n` +
+      // `http://localhost:${port}/recent     play your most recent timestamp\n` +
       `http://localhost:${port}/browse     watch and find your clips`
   );
 });

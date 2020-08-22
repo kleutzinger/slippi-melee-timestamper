@@ -8,7 +8,8 @@ html
     title= title
   body
     h1= message
-    button(type='button', onclick='fetch("http://localhost:7789/recent")' ) Recent
+    button(type='button', onclick='fetch("http://localhost:7789/timestamp").then(r => {r.json().then(window.location.reload())})' ) Make New Timestamp
+    //- button(type='button', onclick='fetch("http://localhost:7789/recent")' ) Play Recent
     ul
       each val, index in allTimestamps
         button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.meta.desc} #{val.nice.ingame_time}

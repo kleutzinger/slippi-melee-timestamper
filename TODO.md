@@ -32,9 +32,10 @@ this would allow you to go back and find cool combos or moments you've manually 
   - /browse
   - [x] `getAllTimestampArr() => [ts1,ts2,...]`
   - [ ] allow modification here
+  - [x] "Generate Timestamp" button
 - [x] add meaningful metadata to distinguish saved timestamps quickly
 - [?] prune frame data some
-- [ ] make realtime or at least reload on newtimestamp
+- [x] make realtime or at least reload on newtimestamp
 - [ ] after the game add a popup to ask for info on what each timestamp was about
 - [ ] investigate rewinding to a point BEFORE startFrame
 -  -  [ ] "play game from beginning?"
