@@ -45,7 +45,8 @@ const {
   getAllTimestampsArr,
   getTimestampById,
   pushTimestamp,
-  updateTimestamp
+  updateTimestamp,
+  deleteTimestamp
 } = require('./api');
 var express = require('express'),
   app = express(),
@@ -111,6 +112,13 @@ app.get('/browse', (req, res) => {
   });
 });
 
+app.get('/edit/:id', (req, res) => {
+  const timestamp = getTimestampById(req.params.id);
+  res.render('edit', {
+    timestamp : timestamp
+  });
+});
+
 app.post('/api/getall', function(req, res) {
   res.json(getAllTimestampsArr());
 });
@@ -120,6 +128,18 @@ app.get('/api/getall', function(req, res) {
 });
 
 app.get('/api/update/:id', function(req, res) {
+  res.json(getAllTimestampsArr());
+});
+
+app.get('/api/delete/:id', function(req, res) {
+  try {
+    let timestamp_id = req.params.id;
+    deleteTimestamp({ uid: timestamp_id });
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+    res.json('err');
+  }
   res.json(getAllTimestampsArr());
 });
 

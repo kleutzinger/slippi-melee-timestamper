@@ -37,11 +37,18 @@ function updateTimestamp(ts) {
     .write();
 }
 
+function deleteTimestamp(ts) {
+  db
+    .get('timestamps')
+    .remove({ uid: ts.uid }) // Lodash shorthand syntax
+    .write();
+}
 // console.log(getTimestampById('0.4466991633600961'));
 // console.log(getAllTimestampsArr());
 module.exports = {
   getAllTimestampsArr,
   getTimestampById,
   pushTimestamp,
-  updateTimestamp
+  updateTimestamp,
+  deleteTimestamp
 };

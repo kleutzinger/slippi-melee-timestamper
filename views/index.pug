@@ -5,6 +5,7 @@ html
       console.log('hi from pug')
       let kevinrobot = 'global'
     <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="./style.css">
     title= title
   body
     h1= message
@@ -12,4 +13,7 @@ html
     //- button(type='button', onclick='fetch("http://localhost:7789/recent")' ) Play Recent
     ul
       each val, index in allTimestamps
-        button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.meta.desc} #{val.nice.ingame_time}
+        div(class="ts-container")
+          button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.meta.desc} #{val.nice.ingame_time}
+          button(type='button', class='red' onclick='fetch("http://localhost:7789/api/delete/' + val.uid + '")' ) [del #{index}]
+          a(href="http://localhost:7789/edit/" + val.uid) edit
