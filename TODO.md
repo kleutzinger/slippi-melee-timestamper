@@ -45,6 +45,11 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [?] stage pictures with stock icons to distinguish timestamps visually
 - [ ] freeze timestmap json specification
 - [x] accept that users will have to install node to use this
+- [ ] could move away from parsing each game frame?
+-  - read dolphin memory
+-  - use timing on file creation
+-  - read .slp file after game and cache! (best way)
+-  - time since last file created 
 - good timestamp metadatas:
 -  - [ ] `last_stock_lost: frame_no` (array?)
 -  - [ ] slippi tags/connect codes
@@ -60,3 +65,8 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] output as youtube video
 - [ ] auto upload/rename video
 - [ ] reposition / preview different timestamp start/end
+
+
+### Notes:
+- what if i wrote interfaces in love2d?
+- https://github.com/bkacjios/m-overlay
