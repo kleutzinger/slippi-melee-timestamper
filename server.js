@@ -170,6 +170,10 @@ const gameByPath = {};
 
 function pollDirForNewFiles(_path) {
   fs.readdir(_path, (err, files) => {
+    if (files === undefined) {
+      console.log(`(server.js) no path at ${_path}`);
+      return;
+    }
     const fileCount = files.length;
     if (fileCount != lastFileCount) {
       lastFileCount = fileCount;
@@ -209,9 +213,11 @@ const watcher = chokidar.watch('', {
   ignoreInitial : true
 });
 
-setInterval(() => {
-  pollDirForNewFiles(config.slippi_output_dir);
-}, 1000);
+if (config.startFileWatch && foundSlippiFiles) {
+  setInterval(() => {
+    pollDirForNewFiles(config.slippi_output_dir);
+  }, 1000);
+}
 
 // console.log(watcher.getWatched());
 
