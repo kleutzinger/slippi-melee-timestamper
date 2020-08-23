@@ -12,9 +12,13 @@ html
     #h1 todo
     //- p=JSON.stringify(timestamp.startFrame)
     button(onClick="uploadForms()") save
-    button(onClick="history.go(-1);") back
-    button(onClick="sendPostRequest({given_timestamp})")
-    input(id="startFrame" type="number")
-    input(id="endFrame" type="number")
-    input(id="desc" type="text")
-    p=JSON.stringify(timestamp)
+    a(href='/browse')
+      button back
+    label Start Frame
+      input(id="startFrame" type="number")
+    label End Frame
+      input(id="endFrame" type="number")
+    label Description
+      input(id="desc" type="text")
+    each elem,i in JSON.parse(timestamp)
+      p !{i}-!{elem}
