@@ -52,7 +52,7 @@ var express = require('express'),
   app = express(),
   // port = process.env.PORT || 5669;
   port = config.port || 7789;
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.set('view engine', 'pug');
 app.use(express.static(path.join(process.cwd(), 'web')));
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
@@ -115,7 +115,7 @@ app.get('/browse', (req, res) => {
 app.get('/edit/:id', (req, res) => {
   const timestamp = getTimestampById(req.params.id);
   res.render('edit', {
-    timestamp : timestamp
+    timestamp : JSON.stringify(timestamp)
   });
 });
 
@@ -129,6 +129,13 @@ app.get('/api/getall', function(req, res) {
 
 app.get('/api/update/:id', function(req, res) {
   res.json(getAllTimestampsArr());
+});
+
+app.post('/api/update', function(req, res) {
+  // console.log(req.body);
+  let given_timestamp = req.body.timestamp;
+  updateTimestamp(given_timestamp);
+  res.json(req.body);
 });
 
 app.get('/api/delete/:id', function(req, res) {
