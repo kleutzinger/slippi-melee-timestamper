@@ -42,7 +42,10 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [x] use pugJS /browse rendering
 - [ ] you can leave most(all) of the gamestate inside the slp file
 - [ ] figure out random high cpu usage on idle
-- [?] stage pictures with stock icons to distinguish timestamps visually
+- [x] stage pictures with stock icons to distinguish timestamps visually
+-  - [x] stock / stage files
+-  - [ ] draw stock icons p1 p2 on stage image
+-  - [ ] cache generated images (by uid)
 - [ ] freeze timestmap json specification
 - [x] accept that users will have to install node to use this
 - [ ] could move away from parsing each game frame?

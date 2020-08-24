@@ -6,11 +6,15 @@
     "lowdb": "^1.0.0",
     "open": "^7.0.4",
     "pug": "^3.0.0",
+    "pureimage": "^0.2.5",
     "slp-parser-js": "^2.3.0",
     "socket.io": "^2.3.0"
   },
   "pkg": {
-    "assets": [ "sounds/*", "web/*" ]
+    "assets": [
+      "sounds/*",
+      "web/*"
+    ]
   },
   "scripts": {
     "start": "node server.js",
@@ -19,6 +23,9 @@
   "bin": "server.js",
   "name": "slippi-melee-timestamper",
   "nodemonConfig": {
-    "ignore": [ "temp.json", "*.json" ]
+    "ignore": [
+      "temp.json",
+      "*.json"
+    ]
   }
 }

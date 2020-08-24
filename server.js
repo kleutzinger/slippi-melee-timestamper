@@ -55,6 +55,8 @@ var express = require('express'),
 app.use(bodyParser.json());
 app.set('view engine', 'pug');
 app.use(express.static(path.join(process.cwd(), 'web')));
+app.use('/icon', express.static(path.join(process.cwd(), 'web')));
+
 // app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
 app.use('/sounds', express.static(sounds_dir));
 app.get('/timestamp', (req, res) => {

@@ -14,6 +14,7 @@ html
     ul
       each val, index in allTimestamps
         div(class="ts-container")
+          img(class='stage_thumb', src='/thumbnails/example.png')
           button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.meta.desc} #{val.nice.ingame_time}
           button(type='button', class='red' onclick='fetch("http://localhost:7789/api/delete/' + val.uid + '")' ) [del #{index}]
           a(href="http://localhost:7789/edit/" + val.uid) edit

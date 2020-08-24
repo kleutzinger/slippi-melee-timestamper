@@ -35,7 +35,8 @@ const config = {
     },
     '3'  : {
       dir_name   : 'stadium',
-      stage_name : 'Pokémon Stadium'
+      stage_name : 'Pokémon Stadium',
+      icon_path  : 'web/icon/stadium.png'
     },
     '28' : {
       dir_name   : 'dreamland',

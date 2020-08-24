@@ -8,6 +8,10 @@ li p {
   display: inline;
 }
 
+img.stage_thumb {
+  width: 150px;
+}
+
 button.red {
   width: 10%;
   color: white;
@@ -16,4 +20,7 @@ button.red {
 }
 div.ts-container {
   position: relative;
+  display: flex;
+  align-items: center;
+  margin: 20px;
 }
