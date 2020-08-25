@@ -8,14 +8,17 @@ html
     title= title
   body
     h1= message
-    button(type='button', onclick='fetch("http://localhost:7789/timestamp").then(r => {r.json().then(window.location.reload())})' ) Make New Timestamp
+    button(type='button', onclick='fetch("/timestamp").then(r => {r.json().then(window.location.reload())})' ) Make New Timestamp
+    br
+    label Run over LAN: (Copy this link to your phone/laptop) 
+      a(href=phone_link id="phone_link") #{phone_link}
     //- button(type='button', onclick='fetch("http://localhost:7789/recent")' ) Play Recent
     ul
       each val, index in allTimestamps
         label #{val.meta.desc}
           div(class="ts-container")
             img(class='stage_thumb', src='/thumbnail/' + val.uid + '.png')
-            button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) ##{index} launch
-            button(type='button', class='red' onclick='fetch("http://localhost:7789/api/delete/' + val.uid + '")' ) delete
-            a(href="http://localhost:7789/edit/" + val.uid)
+            button(type='button', onclick='fetch("/play_slp/' + val.uid + '")' ) ##{index} launch
+            button(type='button', class='red' onclick='fetch("/api/delete/' + val.uid + '")' ) delete
+            a(href="/edit/" + val.uid)
               button edit

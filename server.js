@@ -7,9 +7,6 @@ const fs = require('fs');
 const { default: SlippiGame } = require('slp-parser-js');
 const chokidar = require('chokidar');
 const _ = require('lodash');
-const { connect } = require('http2');
-const { exit } = require('process');
-
 const homedir = require('os').homedir();
 if (!config.slippi_output_dir) {
   config.slippi_output_dir = path.join(homedir, 'Documents', 'Slippi');
@@ -52,6 +49,10 @@ var express = require('express'),
   app = express(),
   // port = process.env.PORT || 5669;
   port = config.port || 7789;
+// prettier-ignore
+LAN_IP = _.chain(require('os').networkInterfaces()).values().flatten().find({ family: 'IPv4', internal: false }).value().address;
+phone_link = `http://${LAN_IP}:${port}`;
+
 app.use(bodyParser.json());
 app.set('view engine', 'pug');
 app.use(express.static(path.join(process.cwd(), 'web')));
@@ -121,6 +122,7 @@ app.get('/browse', (req, res) => {
   res.render('index', {
     title            : 'Hey',
     message          : 'Hello there!',
+    phone_link       : phone_link,
     allTimestamps    : getAllTimestampsArr().map((e) => {
       let nice = niceData(e);
       e.nice = nice;
@@ -195,7 +197,8 @@ const server = app.listen(port, (req, res) => {
     `please open in web browser or send GET request to:\n` +
       `http://localhost:${port}/timestamp  save a timestamp\n` +
       // `http://localhost:${port}/recent     play your most recent timestamp\n` +
-      `http://localhost:${port}/browse     watch and find your clips`
+      `http://localhost:${port}/browse     watch and find your clips\n` +
+      `${phone_link}        on your phone (local network)`
   );
 });
 
@@ -267,8 +270,6 @@ if (config.startFileWatch && foundSlippiFiles) {
     pollDirForNewFiles(config.slippi_output_dir);
   }, 1000);
 }
-
-// console.log(watcher.getWatched());
 
 watcher.on('change', (path) => {
   // console.log(watcher.getWatched());
