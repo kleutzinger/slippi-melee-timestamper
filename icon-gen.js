@@ -72,13 +72,13 @@ function storeThumbnail(timestamp, out_path) {
   makeImg(src_paths, out_path, timestamp.nice);
 }
 
-function setAllThumbnail() {
+function setAllThumbnail(force_write = false) {
   const { getAllTimestampsArr } = require('./api.js');
   const all_timestamps = getAllTimestampsArr();
   let to_write = [];
   for (const ts of all_timestamps) {
     const out_path = path.join('web', 'thumbnail', ts.uid + '.png');
-    if (!fs.existsSync(out_path)) {
+    if (!fs.existsSync(out_path) || force_write) {
       to_write.push([ ts, out_path ]);
     }
   }

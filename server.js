@@ -91,6 +91,10 @@ app.get('/timestamp', (req, res) => {
   res.json(outputObj);
 });
 
+app.get('/', (req, res) => {
+  res.redirect('/browse');
+});
+
 app.get('/recent', (req, res) => {
   // play the recentmost timestamp in timestamps.txt
   const recent_timestamp = getRecentTimestamp();
@@ -99,11 +103,21 @@ app.get('/recent', (req, res) => {
   res.json(recent_timestamp);
 });
 
+app.get('/thumbgen', (req, res) => {
+  require('./icon-gen').setAllThumbnail(false);
+  res.json('gend thumbs');
+});
+
 app.get('/browse', (req, res) => {
   const allTimestampsArr = getAllTimestampsArr();
   const { niceData } = require('./timestamp');
   const { setAllThumbnail } = require('./icon-gen');
-  setAllThumbnail();
+  try {
+    setAllThumbnail();
+  } catch (err) {
+    console.log('error generating thumbnails');
+    console.log(err);
+  }
   res.render('index', {
     title            : 'Hey',
     message          : 'Hello there!',
