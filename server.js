@@ -4,7 +4,7 @@ const config = require(path.join(process.cwd(), 'config.js'));
 // console.log(config);
 config.royalty_status = 'exclude';
 const fs = require('fs');
-const { default: SlippiGame } = require('@slippi/parser-js');
+const { default: SlippiGame } = require('@slippi/slippi-js');
 const chokidar = require('chokidar');
 const _ = require('lodash');
 const homedir = require('os').homedir();
