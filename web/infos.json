@@ -1,0 +1,242 @@
+{
+  "icon_basedir": "web/icon",
+  "char_id_info": {
+    "0": {
+      "name": "Captain_Falcon",
+      "icon": "captain-original.png"
+    },
+    "1": {
+      "name": "Donkey_Kong",
+      "icon": "donkey-original.png"
+    },
+    "2": {
+      "name": "Fox",
+      "icon": "fox-original.png"
+    },
+    "3": {
+      "name": "Game_And_Watch",
+      "icon": "gamewatch-original.png"
+    },
+    "4": {
+      "name": "Kirby",
+      "icon": "kirby-original.png"
+    },
+    "5": {
+      "name": "Bowser",
+      "icon": "koopa-green.png"
+    },
+    "6": {
+      "name": "Link",
+      "icon": "link-green.png"
+    },
+    "7": {
+      "name": "Luigi",
+      "icon": "luigi-green.png"
+    },
+    "8": {
+      "name": "Mario",
+      "icon": "mario-red.png"
+    },
+    "9": {
+      "name": "Marth",
+      "icon": "marth-original.png"
+    },
+    "10": {
+      "name": "Mewtwo",
+      "icon": "mewtwo-original.png"
+    },
+    "11": {
+      "name": "Ness",
+      "icon": "ness-original.png"
+    },
+    "12": {
+      "name": "Peach",
+      "icon": "peach-original.png"
+    },
+    "13": {
+      "name": "Pikachu",
+      "icon": "pikachu-original.png"
+    },
+    "14": {
+      "name": "Ice_Climbers",
+      "icon": "ice_climber-original.png"
+    },
+    "15": {
+      "name": "Jigglypuff",
+      "icon": "purin-original.png"
+    },
+    "16": {
+      "name": "Samus",
+      "icon": "samus-red.png"
+    },
+    "17": {
+      "name": "Yoshi",
+      "icon": "yoshi-green.png"
+    },
+    "18": {
+      "name": "Zelda",
+      "icon": "zelda-original.png"
+    },
+    "19": {
+      "name": "Sheik",
+      "icon": "sheik-original.png"
+    },
+    "20": {
+      "name": "Falco",
+      "icon": "falco-original.png"
+    },
+    "21": {
+      "name": "Young_Link",
+      "icon": "younglink-green.png"
+    },
+    "22": {
+      "name": "Dr_Mario",
+      "icon": "mariod-red.png"
+    },
+    "23": {
+      "name": "Roy",
+      "icon": "roy-original.png"
+    },
+    "24": {
+      "name": "Pichu",
+      "icon": "pichu-original.png"
+    },
+    "25": {
+      "name": "Ganondorf",
+      "icon": "ganon-original.png"
+    },
+    "26": {
+      "name": "Master_Hand",
+      "icon": "master_hand.png"
+    },
+    "27": {
+      "name": "Wireframe_Male",
+      "icon": "wireframe.png"
+    },
+    "28": {
+      "name": "Wireframe_Female",
+      "icon": "wireframe.png"
+    },
+    "29": {
+      "name": "Giga_Bowser",
+      "icon": "giga_bowser.png"
+    },
+    "30": {
+      "name": "Crazy_Hand",
+      "icon": "crazy_hand.png"
+    },
+    "31": {
+      "name": "Sandbag",
+      "icon": "yoshi-blue.png"
+    },
+    "32": {
+      "name": "Popo",
+      "icon": "ice_climber-original.png"
+    }
+  },
+  "stage_id_info": {
+    "2": {
+      "dir_name": "fountain",
+      "stage_name": "Fountain of Dreams",
+      "icon": "fountain.png"
+    },
+    "3": {
+      "dir_name": "stadium",
+      "stage_name": "Pokémon Stadium",
+      "icon": "stadium.png"
+    },
+    "8": {
+      "dir_name": "yoshis",
+      "stage_name": "Yoshi's Story",
+      "icon": "yoshis.png"
+    },
+    "28": {
+      "dir_name": "dreamland",
+      "stage_name": "Dream Land",
+      "icon": "dreamland.png"
+    },
+    "31": {
+      "dir_name": "battlefield",
+      "stage_name": "Battlefield",
+      "icon": "battlefield.png"
+    },
+    "32": {
+      "dir_name": "final",
+      "stage_name": "Final Destination",
+      "icon": "final.png"
+    },
+    "4": {
+      "stage_name": "PRINCESS_PEACHS_CASTLE"
+    },
+    "5": {
+      "stage_name": "KONGO_JUNGLE"
+    },
+    "6": {
+      "stage_name": "BRINSTAR"
+    },
+    "7": {
+      "stage_name": "CORNERIA"
+    },
+    "9": {
+      "stage_name": "ONETT"
+    },
+    "10": {
+      "stage_name": "MUTE_CITY"
+    },
+    "11": {
+      "stage_name": "RAINBOW_CRUISE"
+    },
+    "12": {
+      "stage_name": "JUNGLE_JAPES"
+    },
+    "13": {
+      "stage_name": "GREAT_BAY"
+    },
+    "14": {
+      "stage_name": "HYRULE_TEMPLE"
+    },
+    "15": {
+      "stage_name": "BRINSTAR_DEPTHS"
+    },
+    "16": {
+      "stage_name": "YOSHIS_ISLAND"
+    },
+    "17": {
+      "stage_name": "GREEN_GREENS"
+    },
+    "18": {
+      "stage_name": "FOURSIDE"
+    },
+    "19": {
+      "stage_name": "MUSHROOM_KINGDOM_I"
+    },
+    "20": {
+      "stage_name": "MUSHROOM_KINGDOM_II"
+    },
+    "22": {
+      "stage_name": "VENOM"
+    },
+    "23": {
+      "stage_name": "POKE_FLOATS"
+    },
+    "24": {
+      "stage_name": "BIG_BLUE"
+    },
+    "25": {
+      "stage_name": "ICICLE_MOUNTAIN"
+    },
+    "26": {
+      "stage_name": "ICETOP"
+    },
+    "27": {
+      "stage_name": "FLAT_ZONE"
+    },
+
+    "29": {
+      "stage_name": "YOSHIS_ISLAND_N64"
+    },
+    "30": {
+      "stage_name": "KONGO_JUNGLE_N64"
+    }
+  }
+}

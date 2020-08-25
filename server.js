@@ -102,6 +102,8 @@ app.get('/recent', (req, res) => {
 app.get('/browse', (req, res) => {
   const allTimestampsArr = getAllTimestampsArr();
   const { niceData } = require('./timestamp');
+  const { setAllThumbnail } = require('./icon-gen');
+  setAllThumbnail();
   res.render('index', {
     title            : 'Hey',
     message          : 'Hello there!',

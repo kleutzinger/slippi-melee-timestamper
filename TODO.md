@@ -44,8 +44,8 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] figure out random high cpu usage on idle
 - [x] stage pictures with stock icons to distinguish timestamps visually
 -  - [x] stock / stage files
--  - [ ] draw stock icons p1 p2 on stage image
--  - [ ] cache generated images (by uid)
+-  - [x] draw stock icons p1 p2 on stage image
+-  - [x] cache generated images (by uid)
 - [ ] freeze timestmap json specification
 - [x] accept that users will have to install node to use this
 - [ ] could move away from parsing each game frame?
@@ -54,6 +54,7 @@ this would allow you to go back and find cool combos or moments you've manually 
 -  - read .slp file after game and cache! (best way)
 -  - time since last file created 
 - good timestamp metadatas:
+- [ ] https://github.com/hohav/py-slippi/blob/68a98f7eb7b3235fad4bb5b10cd89da46b396eab/slippi/id.py
 -  - [ ] `last_stock_lost: frame_no` (array?)
 -  - [ ] slippi tags/connect codes
 -  - [ ] date (of ingametime or irl clock? (same thing??))

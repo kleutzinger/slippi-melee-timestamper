@@ -4,6 +4,7 @@ sounds_nonfree/
 *.zip
 *.old
 timestamps.txt
+web/thumbnail/*
 
 # Logs
 logs

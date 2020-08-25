@@ -1,9 +1,8 @@
 html
   head
     script(src="https://livejs.com/live.js")
-    script.
-      console.log('hi from pug')
-      let kevinrobot = 'global'
+    //- script(type='text/javascript').
+    //-   const all_timestamps = !{allTimestamps}
     <link rel="stylesheet" href="https://unpkg.com/mvp.css">
     <link rel="stylesheet" href="./style.css">
     title= title
@@ -14,7 +13,7 @@ html
     ul
       each val, index in allTimestamps
         div(class="ts-container")
-          img(class='stage_thumb', src='/thumbnails/example.png')
+          img(class='stage_thumb', src='/thumbnail/' + val.uid + '.png')
           button(type='button', onclick='fetch("http://localhost:7789/play_slp/' + val.uid + '")' ) [#{index}] #{val.nice.stage_name} #{val.meta.desc} #{val.nice.ingame_time}
           button(type='button', class='red' onclick='fetch("http://localhost:7789/api/delete/' + val.uid + '")' ) [del #{index}]
           a(href="http://localhost:7789/edit/" + val.uid) edit
