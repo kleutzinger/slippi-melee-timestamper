@@ -4,13 +4,10 @@ const config = require(path.join(process.cwd(), 'config.js'));
 // console.log(config);
 config.royalty_status = 'exclude';
 const fs = require('fs');
-const { default: SlippiGame } = require('slp-parser-js');
+const { default: SlippiGame } = require('@slippi/parser-js');
 const chokidar = require('chokidar');
 const _ = require('lodash');
 const homedir = require('os').homedir();
-if (!config.slippi_output_dir) {
-  config.slippi_output_dir = path.join(homedir, 'Documents', 'Slippi');
-}
 let foundSlippiFiles = false;
 try {
   for (file of fs.readdirSync(config.slippi_output_dir)) {
@@ -28,12 +25,10 @@ if (!foundSlippiFiles) {
 please modify your config.js -> slippi_output_dir
   `);
 }
-const sounds_dir = path.join(process.cwd(), 'sounds');
 
 const bodyParser = require('body-parser');
 const { isNumber } = require('lodash');
 const {
-  startReplay,
   writeTimestamp,
   getRecentTimestamp,
   startTimestampObj
@@ -50,16 +45,13 @@ var express = require('express'),
   // port = process.env.PORT || 5669;
   port = config.port || 7789;
 // prettier-ignore
-LAN_IP = _.chain(require('os').networkInterfaces()).values().flatten().find({ family: 'IPv4', internal: false }).value().address;
-phone_link = `http://${LAN_IP}:${port}`;
+let LAN_IP = _.chain(require('os').networkInterfaces()).values().flatten().find({ family: 'IPv4', internal: false }).value().address;
+let phone_link = `http://${LAN_IP}:${port}`;
 
 app.use(bodyParser.json());
 app.set('view engine', 'pug');
 app.use(express.static(path.join(process.cwd(), 'web')));
-app.use('/icon', express.static(path.join(process.cwd(), 'web')));
 
-// app.use('/sounds', express.static(path.join(__dirname, 'sounds')));
-app.use('/sounds', express.static(sounds_dir));
 app.get('/timestamp', (req, res) => {
   // console.log(JSON.stringify(latest_frame_data));
   console.log(`(server.js) latest frame was ${frame_count}`);
@@ -119,7 +111,7 @@ app.get('/browse', (req, res) => {
     console.log('error generating thumbnails');
     console.log(err);
   }
-  res.render('index', {
+  res.render('browse', {
     title            : 'Hey',
     message          : 'Hello there!',
     phone_link       : phone_link,
@@ -168,15 +160,6 @@ app.get('/api/delete/:id', function(req, res) {
     res.json('err');
   }
   res.json(getAllTimestampsArr());
-});
-
-app.post('/play_slp', (req, res) => {
-  // needs {slp_path:___, start_frame:___}
-  const slp_path = req.body.slp_path;
-  const start_frame = req.body.start_frame;
-  if (slp_path && _.isNumber(start_frame)) {
-    timestamp.startReplay(slp_path, start_frame);
-  }
 });
 
 app.get('/play_slp/:id', (req, res) => {
@@ -281,7 +264,7 @@ watcher.on('change', (path) => {
     if (!game) {
       console.log(`New file at: ${path}`);
       gameAborted = false;
-      game = new SlippiGame(path);
+      game = new SlippiGame(path, { processOnTheFly: true });
       gameByPath[path] = {
         game  : game,
         state : {

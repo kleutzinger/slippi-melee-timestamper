@@ -70,7 +70,7 @@ this would allow you to go back and find cool combos or moments you've manually 
 - [ ] output as youtube video
 - [ ] auto upload/rename video
 - [ ] reposition / preview different timestamp start/end
-
+- [ ] thumbnails are VIDEO of the gameplay @ timestamp
 
 ### Notes:
 - what if i wrote interfaces in love2d?

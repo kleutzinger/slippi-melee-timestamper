@@ -68,24 +68,12 @@ function launchReplays(timestamp_arr) {
   const json_path = generateTempReplayFile(timestamp_arr);
   // const json_path = 'C:\\Users\\kevin\\Desktop\\combosnew.json';
   const args = [ '-i', json_path ];
-  execFile(config.replay_dolphin_path, args, function callback(
-    error,
-    stdout,
-    stderr
-  ) {
+  execFile(config.replay_dolphin_path, args, (error, stdout, stderr) => {
     if (error) {
       console.log('error executing replay dolphin');
     }
     // result
   });
-}
-function startReplay(slp_path, startFrame = 0, duration = 60 * 7) {
-  let tmpObj = {
-    path       : slp_path,
-    startFrame : startFrame,
-    endFrame   : startFrame + duration
-  };
-  launchReplays([ tmpObj ]);
 }
 
 function startTimestampObj(timestamp) {
@@ -148,10 +136,8 @@ function niceData(ts) {
 // https://github.com/project-slippi/slippi-wiki/blob/master/COMM_SPEC.md
 module.exports = {
   writeTimestamp,
-  startReplay,
   startTimestampObj,
   getRecentTimestamp,
-  getAllTimestampsArr,
   frame_to_igt,
   niceData
 };

@@ -1,11 +1,16 @@
 const { join } = require('path');
-const config = {
+const { homedir } = require('os');
+const { existsSync } = require('fs');
+
+let action_required = false;
+
+let config = {
   // *********************************************
-  // uncomment and edit below to set where slippi puts your .slp files
+  // uncomment and edit below to set where slippi ouputs your .slp files
   // slippi_output_dir        : 'C:\\Users\\kevin\\Documents\\Slippi',
+  // replay_dolphin_path      : 'C:\\Users\\kevin\\AppData\\Roaming\\Slippi Desktop App\\dolphin\\Dolphin.exe',
   // *********************************************
-  replay_dolphin_path   :
-    'C:\\Users\\kevin\\AppData\\Roaming\\Slippi Desktop App\\dolphin\\Dolphin.exe',
+
   timestamp_output_path : join(__dirname, 'timestamps.txt'),
   port                  : 7789,
 
@@ -117,5 +122,24 @@ const config = {
     }
   }
 };
+
+if (!config.slippi_output_dir) {
+  config.slippi_output_dir = join(homedir(), 'Documents', 'Slippi');
+}
+
+if (!config.replay_dolphin_path) {
+  config.replay_dolphin_path = join(
+    homedir(),
+    'AppData/Roaming/Slippi Desktop App/dolphin/Dolphin.exe'
+  );
+}
+
+if (!existsSync(config.replay_dolphin_path)) {
+  action_required = true;
+  console.log(
+    `warning! I can't launch replays \n\tPlease install Slippi Desktop App` +
+      `\n\t${config.replay_dolphin_path}`
+  );
+}
 
 module.exports = config;
