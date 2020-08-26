@@ -62,6 +62,7 @@ app.get('/timestamp', (req, res) => {
     uid        : `${Date.now()}`,
     path       : latest_path,
     meta       : {
+      metadata    : latest_metadata,
       game_state  : latest_game_state,
       p1_p2_frame : latest_player1_2,
       desc        : '',
@@ -225,6 +226,7 @@ var latest_game_state = null;
 var latest_path = null;
 var latest_player1_2 = {};
 var lastFileCount = -1;
+var latest_metadata = {};
 var recentMostFile = '';
 var watchHistory = [];
 
@@ -315,6 +317,7 @@ watcher.on('change', (path) => {
 
     settings = game.getSettings();
 
+    latest_metadata = game.getMetadata();
     frames = game.getFrames();
     latestFrame = game.getLatestFrame();
     gameEnd = game.getGameEnd();
