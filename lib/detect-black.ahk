@@ -5,20 +5,21 @@
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
-SetTitleMatchMode RegEx
+SetTitleMatchMode 1
 url:= "http://localhost:7789/ahk_post"
 body = {"dolphin_state": "no"}
 
-If WinExist("Faster.*Playback"){
+; If WinExist("Faster.*Playback"){
+If WinExist("Faster"){
   ; how tf to get this working?????
   ; ToolTip, "dolphin is running"
-  WinGetPos, X, Y, Width, Height, "Faster"
+  CoordMode, Pixel, Screen
+  
+  WinGetPos, X, Y, Width, Height,
   ; MsgBox, X %X% Y %Y% WxH: %Width%x%Height%
-  CoordMode, Mouse, Screen
-  centerx := (X - Width/2)
-  centery := (Y - Height/2)
-  ; centerx := Width * 0.5
-  ; centery := Height * 0.5
+  centerx := (X + Width/2)
+  centery := (Y + Height/2)
+  
   
   PixelGetColor, color, %centerx%, %centery%,
   ToolTip, %color%, %centerx%, %centery%
