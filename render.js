@@ -23,7 +23,7 @@ function setFrameDump(offon) {
 
 function initChokidar() {}
 
-function takeDumps(timestamps) {
+function preDumpCleanup() {
   // remove pre-existing framedump0.avi files
   for (const to_remove of [
     dolphin_dump_video,
@@ -34,6 +34,10 @@ function takeDumps(timestamps) {
       fs.unlinkSync(to_remove);
     }
   }
+}
+
+function takeDumps(timestamps) {
+  preDumpCleanup;
   // frame Dump must be ON
   launchReplays(timestamps);
 }
@@ -56,6 +60,6 @@ function dumpTimestamp(timestamp) {
   let ts = timestamp;
 }
 
-takeDumps([ example_ts ]);
+// takeDumps([ example_ts ]);
 // afterDump(example_ts);
-module.exports = {};
+module.exports = { preDumpCleanup };

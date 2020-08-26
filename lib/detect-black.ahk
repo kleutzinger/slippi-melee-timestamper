@@ -26,18 +26,23 @@ If WinExist("Faster"){
   body = {"dolphin_state": "running", "center_color": "%color%", "centerx": "%centerx%", "centery": "%centery%"}
 }
 
-whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-whr.Open("POST", url, true)
-; whr.SetRequestHeader("User-Agent", User-Agent)
-whr.SetRequestHeader("Content-Type", "application/json")
-; whr.SetRequestHeader("Cookie", Cookie)
+DllCall("kernel32\AllocConsole")
+oFile := FileOpen("*", "w") ;for stdout
+oFile.Write("STDOUT: abc`r`ndef`r`nghi")
+oFile.Close()
 
-whr.Send(body)
+; whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+; whr.Open("POST", url, true)
+; ; whr.SetRequestHeader("User-Agent", User-Agent)
+; whr.SetRequestHeader("Content-Type", "application/json")
+; ; whr.SetRequestHeader("Cookie", Cookie)
 
-whr.WaitForResponse()
+; whr.Send(body)
 
-^!z:: ; Control+Alt+Z hotkey.
-MouseGetPos, MouseX, MouseY
-PixelGetColor, color, %MouseX%, %MouseY%
-MsgBox The color at the current cursor position is %color%.
-return
+; whr.WaitForResponse()
+
+; ^!z:: ; Control+Alt+Z hotkey.
+; MouseGetPos, MouseX, MouseY
+; PixelGetColor, color, %MouseX%, %MouseY%
+; MsgBox The color at the current cursor position is %color%.
+; return

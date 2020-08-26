@@ -165,9 +165,8 @@ app.post('/ahk_post', function(req, res) {
 });
 
 app.post('/api/update', function(req, res) {
-  // console.log(req.body);
   let given_timestamp = req.body.timestamp;
-  updateTimestamp(given_timestamp);
+  updateTimestamp(given_timestamp, true);
   res.json(req.body);
 });
 
@@ -245,6 +244,7 @@ function pollDirForNewFiles(_path) {
     }
   });
 }
+console.log(config.recent_slp);
 
 async function sendFileToChokidar(filepath) {
   // console.log(`set chok to ${filepath}`);
@@ -317,7 +317,6 @@ watcher.on('change', (path) => {
 
     settings = game.getSettings();
 
-    latest_metadata = game.getMetadata();
     frames = game.getFrames();
     latestFrame = game.getLatestFrame();
     gameEnd = game.getGameEnd();

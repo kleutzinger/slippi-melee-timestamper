@@ -8,6 +8,7 @@ const { json } = require('express');
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 var api = require('./api.js');
+var { preDumpCleanup } = require('./render');
 
 function writeTimestamp(game_info, output_path, discard_meta = true) {
   let output_string = game_info_to_txt_line(game_info);
@@ -65,6 +66,7 @@ function generateTempReplayFile(timestamp_arr) {
 }
 
 function launchReplays(timestamp_arr) {
+  preDumpCleanup(); // remove old framedumps
   const json_path = generateTempReplayFile(timestamp_arr);
   // const json_path = 'C:\\Users\\kevin\\Desktop\\combosnew.json';
   const args = [ '-i', json_path ];

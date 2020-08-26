@@ -1,8 +1,10 @@
 const path = require('path');
 const { mkdirSync } = require('fs');
 const { homedir } = require('os');
-const { existsSync, fstat } = require('fs');
+const { existsSync, readdirSync, fstat } = require('fs');
+const { max } = require('lodash');
 const { stage_id_info, char_id_info } = require('./web/infos.json');
+const { exception } = require('console');
 
 let action_required = false;
 
@@ -31,6 +33,16 @@ let config = {
 if (!config.slippi_output_dir) {
   config.slippi_output_dir = path.join(homedir(), 'Documents', 'Slippi');
 }
+
+config.getRecentSlp = () => {
+  try {
+    let files = readdirSync(config.slippi_output_dir);
+    return path.join(config.slippi_output_dir, max(files));
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 if (!config.replay_dolphin_path) {
   config.replay_dolphin_path = path.join(
