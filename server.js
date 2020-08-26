@@ -131,6 +131,20 @@ app.get('/edit/:id', (req, res) => {
   });
 });
 
+app.get('/start_dolphin', function(req, res) {
+  console.log('launch dolphin');
+  res.json('ill start up dolphin');
+  require('child_process').execFile(
+    config.replay_dolphin_path,
+    [ '--exec="nope"' ],
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log('error executing replay dolphin');
+      }
+    }
+  );
+});
+
 app.post('/api/getall', function(req, res) {
   res.json(getAllTimestampsArr());
 });
@@ -141,6 +155,12 @@ app.get('/api/getall', function(req, res) {
 
 app.get('/api/update/:id', function(req, res) {
   res.json(getAllTimestampsArr());
+});
+
+app.post('/ahk_post', function(req, res) {
+  // console.log(req.body);
+  console.log(req.body);
+  res.json(req.body);
 });
 
 app.post('/api/update', function(req, res) {

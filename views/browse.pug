@@ -9,6 +9,8 @@ html
   body
     h1= message
     button(type='button', onclick='fetch("/timestamp").then(r => {r.json().then(window.location.reload())})' ) Make New Timestamp
+    button(type='button', onclick='fetch("/start_dolphin").then(r=>r.json().then(console.log))' ) Configure Replay Dolphin
+
     br
     label Run over LAN: (Copy this link to your phone/laptop) 
       a(href=phone_link id="phone_link") #{phone_link}

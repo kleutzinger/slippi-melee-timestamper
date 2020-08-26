@@ -56,6 +56,6 @@ function dumpTimestamp(timestamp) {
   let ts = timestamp;
 }
 
-// takeDumps([ example_ts ]);
+takeDumps([ example_ts ]);
 // afterDump(example_ts);
 module.exports = {};
