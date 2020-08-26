@@ -19,6 +19,7 @@ function tsToPaths(ts) {
   // take a timestamp => return icon_paths = [stage, char0, char1]
   const img_basedir = 'web/icon';
   const nice = ts.nice; // chg to info.meta.nice
+  console.log(ts);
   const stage_img = stage_id_info[nice.stage_id].icon;
   const char0_img = char_id_info[nice.p0_char].icon;
   const char1_img = char_id_info[nice.p1_char].icon;

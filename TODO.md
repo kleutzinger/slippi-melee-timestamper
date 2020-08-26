@@ -59,7 +59,15 @@ this would allow you to go back and find cool combos or moments you've manually 
 -  - [ ] `last_stock_lost: frame_no` (array?)
 -  - [ ] slippi tags/connect codes
 -  - [ ] date (of ingametime or irl clock? (same thing??))
+- [ ] prevent crashes on nonexistent folders in /web
+
 - [x] ```function frame_to_igt(frame_count) {}```
+
+### Render Button
+- [ ] once dump is over, store to /renders folder
+- [ ] write out dolphin instructions
+- [ ] (include ffmpeg and trim black frames?)
+
 ### Important Links
 - http://localhost:7789/timestamp  
 - http://localhost:7789/recent  

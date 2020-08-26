@@ -5,6 +5,7 @@ sounds_nonfree/
 *.old
 timestamps.txt
 web/thumbnail/*
+!web/thumbnail/example.png
 
 # Logs
 logs
