@@ -174,6 +174,13 @@ app.get('/play_slp/:id', (req, res) => {
   }
 });
 
+app.post('/play_slp', function(req, res) {
+  // console.log(req.body);
+  let given_timestamp = req.body.timestamp;
+  startTimestampObj(given_timestamp);
+  res.json(req.body);
+});
+
 const server = app.listen(port, (req, res) => {
   console.log('Listening on port: ' + port);
   console.log(

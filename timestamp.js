@@ -139,5 +139,6 @@ module.exports = {
   startTimestampObj,
   getRecentTimestamp,
   frame_to_igt,
-  niceData
+  niceData,
+  launchReplays
 };
