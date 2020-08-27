@@ -54,6 +54,8 @@ this would allow you to go back and find cool combos or moments you've manually 
 -  - use timing on file creation
 -  - read .slp file after game and cache! (best way)
 -  - time since last file created 
+- [ ] backup any clipped .slp files?
+- [ ] render using images?
 - good timestamp metadatas:
 - [ ] https://github.com/hohav/py-slippi/blob/68a98f7eb7b3235fad4bb5b10cd89da46b396eab/slippi/id.py
 -  - [ ] `last_stock_lost: frame_no` (array?)

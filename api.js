@@ -26,9 +26,9 @@ function getMetaStats(timestamp) {
     const game = new SlippiGame(timestamp.path);
     return [ game.getMetadata(), game.getStats() ];
   } catch (error) {
-    console.log(error);
-    console.log('error writing metadata on ', timestamp.path);
-    return null;
+    console.log(error.message);
+    console.log("can't get metadata on ", timestamp.path);
+    return [ {}, {} ];
   }
 }
 
@@ -48,8 +48,10 @@ function getRecentTimestamp() {
 function updateTimestamp(ts, ensure_metadata = false) {
   if (ensure_metadata) {
     const metastat = getMetaStats(ts);
-    _.set(ts, 'meta.metadata', metastat[0]);
-    // _.set(ts, 'meta.nice', niceData(ts));
+    if (!_.isEmpty(metastat[0])) {
+      _.set(ts, 'meta.metadata', metastat[0]);
+    }
+    // _.set(ts, 'meta.nice', niceData(ts)); // hard to import niceData
     // _.set(ts, 'meta.stats', metastat[1]); //don't really care about stats, actually
   }
   db
