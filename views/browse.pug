@@ -7,6 +7,8 @@ html
     <link rel="stylesheet" href="./style.css">
     title= title
   body
+    //- script(type='text/javascript').
+      //- var all_timestamps = !{allTimestamps}
     h1= message
     button(type='button', onclick='fetch("/timestamp").then(r => {r.json().then(window.location.reload())})' ) Make New Timestamp
     button(type='button', onclick='fetch("/start_dolphin").then(r=>r.json().then(console.log))' ) Configure Replay Dolphin

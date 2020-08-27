@@ -28,15 +28,12 @@ please modify your config.js -> slippi_output_dir
 
 const bodyParser = require('body-parser');
 const { isNumber } = require('lodash');
-const {
-  writeTimestamp,
-  getRecentTimestamp,
-  startTimestampObj
-} = require('./timestamp');
+const { writeTimestamp, startTimestampObj } = require('./timestamp');
 const {
   getAllTimestampsArr,
   getTimestampById,
   pushTimestamp,
+  getRecentTimestamp,
   updateTimestamp,
   deleteTimestamp
 } = require('./api');
@@ -98,7 +95,7 @@ app.get('/recent', (req, res) => {
 });
 
 app.get('/thumbgen', (req, res) => {
-  require('./icon-gen').setAllThumbnail(false);
+  require('./icon-gen').setAllThumbnail(true);
   res.json('gend thumbs');
 });
 

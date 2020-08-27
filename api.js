@@ -14,11 +14,6 @@ const { niceData } = require('./timestamp');
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ timestamps: [], user: {}, count: 0 }).write();
 
-function populate_from_txt() {
-  var olArr = require('./timestamp').getAllTimestampsArr();
-  db.set('timestamps', olArr).write();
-}
-
 function getAllTimestampsArr(ensure_metadata = false) {
   let all_ts = db.get('timestamps').value();
   if (!ensure_metadata) {
@@ -45,11 +40,16 @@ function getTimestampById(id) {
   return db.get('timestamps').find({ uid: id }).value();
 }
 
+function getRecentTimestamp() {
+  let tsarr = getAllTimestampsArr();
+  return tsarr[tsarr.length - 1];
+}
+
 function updateTimestamp(ts, ensure_metadata = false) {
   if (ensure_metadata) {
     const metastat = getMetaStats(ts);
     _.set(ts, 'meta.metadata', metastat[0]);
-    _.set(ts, 'meta.nice', niceData(ts));
+    // _.set(ts, 'meta.nice', niceData(ts));
     // _.set(ts, 'meta.stats', metastat[1]); //don't really care about stats, actually
   }
   db
@@ -72,5 +72,6 @@ module.exports = {
   getTimestampById,
   pushTimestamp,
   updateTimestamp,
-  deleteTimestamp
+  deleteTimestamp,
+  getRecentTimestamp
 };

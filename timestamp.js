@@ -7,8 +7,7 @@ const _ = require('lodash');
 const { json } = require('express');
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
-var api = require('./api.js');
-var { preDumpCleanup } = require('./render');
+// var { preDumpCleanup } = require('./render');
 
 function writeTimestamp(game_info, output_path, discard_meta = true) {
   let output_string = game_info_to_txt_line(game_info);
@@ -66,7 +65,7 @@ function generateTempReplayFile(timestamp_arr) {
 }
 
 function launchReplays(timestamp_arr) {
-  preDumpCleanup(); // remove old framedumps
+  // preDumpCleanup(); // remove old framedumps
   const json_path = generateTempReplayFile(timestamp_arr);
   // const json_path = 'C:\\Users\\kevin\\Desktop\\combosnew.json';
   const args = [ '-i', json_path ];
@@ -81,15 +80,6 @@ function launchReplays(timestamp_arr) {
 function startTimestampObj(timestamp) {
   // console.log('starting timestamp obj ' + timestamp);
   launchReplays([ timestamp ]);
-}
-
-function getAllTimestampsArr() {
-  return api.getAllTimestampsArr();
-}
-
-function getRecentTimestamp() {
-  const all = getAllTimestampsArr();
-  return all[all.length - 1];
 }
 
 function frame_to_igt(frame_count) {
@@ -122,6 +112,15 @@ function niceData(ts) {
   let p1_char = player_1_settings.characterId;
   let p0_stock = _.get(ts, 'meta.p1_p2_frame["0"].post.stocksRemaining');
   let p1_stock = _.get(ts, 'meta.p1_p2_frame["1"].post.stocksRemaining');
+
+  let p0_color = _.get(
+    ts,
+    'meta.game_state.settings.players[0].characterColor'
+  );
+  let p1_color = _.get(
+    ts,
+    'meta.game_state.settings.players[1].characterColor'
+  );
   let igt = frame_to_igt(ts.startFrame);
 
   let data_pool = {
@@ -141,7 +140,6 @@ function niceData(ts) {
 module.exports = {
   writeTimestamp,
   startTimestampObj,
-  getRecentTimestamp,
   frame_to_igt,
   niceData,
   launchReplays

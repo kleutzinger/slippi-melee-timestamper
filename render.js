@@ -5,7 +5,6 @@ const chokidar = require('chokidar');
 const _ = require('lodash');
 const config = require('./config');
 const path = require('path');
-const api = require('./api');
 const fs = require('fs');
 const { getAllTimestampsArr } = require('./api');
 const { startTimestampObj, launchReplays } = require('./timestamp');
@@ -37,7 +36,7 @@ function preDumpCleanup() {
 }
 
 function takeDumps(timestamps) {
-  preDumpCleanup;
+  preDumpCleanup();
   // frame Dump must be ON
   launchReplays(timestamps);
 }
