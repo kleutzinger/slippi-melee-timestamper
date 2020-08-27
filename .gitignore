@@ -6,6 +6,7 @@ sounds_nonfree/
 timestamps.txt
 web/thumbnail/*
 !web/thumbnail/example.png
+!web/thumbnail/ui-example.png
 renders/
 lib/
 !lib/detect-black.ahk

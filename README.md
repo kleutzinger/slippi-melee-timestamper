@@ -10,8 +10,12 @@ to run:
 npm install
 node server.js
 ```
-during slippi game, visit in browser (or send GET request)  
+before you launch melee, open this link as the homepage of the app 
+`http://localhost:7789/browse`  
+
+if during slippi game, visit in browser (or send GET request)  
 `http://localhost:7789/timestamp`  
+this will save your last game of melee and you'll have a link to launch it.
 your timestamp will be appended to `timestamps.txt`  
 play your most recently-saved replay by visiting:
 `http://localhost:7789/recent`  
