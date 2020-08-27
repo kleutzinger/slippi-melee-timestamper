@@ -9,7 +9,7 @@ web/thumbnail/*
 renders/
 lib/
 !lib/detect-black.ahk
-
+test.*
 # Logs
 logs
 *.log

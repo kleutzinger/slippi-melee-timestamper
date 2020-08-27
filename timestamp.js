@@ -130,6 +130,8 @@ function niceData(ts) {
     stage_id,
     p0_char,
     p1_char,
+    p0_color,
+    p1_color,
     p1_stock,
     p0_stock
   };

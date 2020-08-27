@@ -9,6 +9,7 @@ const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 const { copyFile } = require('fs');
+const { niceData } = require('./timestamp');
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ timestamps: [], user: {}, count: 0 }).write();
@@ -48,6 +49,7 @@ function updateTimestamp(ts, ensure_metadata = false) {
   if (ensure_metadata) {
     const metastat = getMetaStats(ts);
     _.set(ts, 'meta.metadata', metastat[0]);
+    _.set(ts, 'meta.nice', niceData(ts));
     // _.set(ts, 'meta.stats', metastat[1]); //don't really care about stats, actually
   }
   db

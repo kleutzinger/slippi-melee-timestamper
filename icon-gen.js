@@ -8,9 +8,11 @@ const example_input = {
   output_path : 'web/out.png',
   ingame_time : '04:08.66',
   stage_name  : 'Pokémon Stadium',
-  stage_id    : 1,
+  stage_id    : 3,
   p0_char     : 19,
   p1_char     : 19,
+  p0_color    : 3,
+  p1_color    : 1,
   p1_stock    : 0,
   p0_stock    : 1
 };
@@ -19,10 +21,16 @@ function tsToPaths(ts) {
   // take a timestamp => return icon_paths = [stage, char0, char1]
   const img_basedir = 'web/icon';
   const nice = ts.nice; // chg to info.meta.nice
-  console.log(ts);
+  console.log(stage_id_info);
   const stage_img = stage_id_info[nice.stage_id].icon;
-  const char0_img = char_id_info[nice.p0_char].icon;
-  const char1_img = char_id_info[nice.p1_char].icon;
+  let char0_img, char1_img;
+  if (Number.isInteger(nice.p0_color) && Number.isInteger(nice.p1_color)) {
+    char0_img = char_id_info[nice.p0_char].skins[nice.p0_color];
+    char1_img = char_id_info[nice.p1_char].skins[nice.p1_color];
+  } else {
+    char0_img = char_id_info[nice.p0_char].icon;
+    char1_img = char_id_info[nice.p1_char].icon;
+  }
   return [ stage_img, char0_img, char1_img ].map((filename) => {
     return path.join(img_basedir, filename);
   });
@@ -99,8 +107,5 @@ function setAllThumbnail(force_write = false) {
 //     console.log(fs.existsSync(img));
 //   }
 // }
-
-// const i = infoToPaths(example_input);
-// makeImg(i, {example_input});
 
 module.exports = { setAllThumbnail };
